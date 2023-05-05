@@ -376,7 +376,7 @@
 .best-estate-features2{
   display: flex;
   justify-content: space-between;
-  padding: 5px;
+  padding: 5px 0px 5px 15px;
   background-color: #f0f0f0;
 }
 .best-estate-feature{

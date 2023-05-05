@@ -1,7 +1,8 @@
 import { Grid, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { FormInput, MultilineFormInput } from './common/Inputs'
-import { SelectResidence } from './common/SelectComp'
+import { SelectResidence, SelectRoomCount } from './common/SelectComp'
+import AutoComp from './common/AutoComp'
 
 const FlatAdd = () => {
     return (
@@ -21,8 +22,11 @@ const FlatAdd = () => {
                 </Stack>
                 <Stack direction="row" spacing={3} padding={1}>
                     <SelectResidence label="Mesken" />
-                    <FormInput label="Oda Sayısı" />
+                    <SelectRoomCount label="Oda Sayısı" />
                     <FormInput label="Metrekare" />
+                </Stack>
+                <Stack direction="row" spacing={3} padding={1}>
+                    <AutoComp />
                 </Stack>
             </Grid>
         </Grid>
