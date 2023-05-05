@@ -19,21 +19,21 @@ export const SelectComp = (props) => {
     )
 }
 
-export const SelectResidence = (props) => {
+export const SelectResidence = () => {
     const [residence, setResidence] = React.useState('');
     const handleChange = (event) => {
         setResidence(event.target.value);
     };
     return (
-        <FormControl fullWidth>
+        <FormControl fullWidth sx={{bgcolor:'white'}}>
           <InputLabel id="demo-simple-select-label">Mesken</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={residence}
             label="Mesken"
-            onChange={handleChange}>
-
+            onChange={handleChange}
+            >
             <MenuItem value="Daire">Daire</MenuItem>
             <MenuItem value="Müstakil">Müstakil</MenuItem>
             <MenuItem value="Villa">Villa</MenuItem>
