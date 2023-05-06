@@ -13,6 +13,10 @@ const productSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    address:{
+        type: String,
+        required: true
+    },
     price:{
         type: Number,
         trim: true,
@@ -22,7 +26,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    content:{
+    type:{
         type: String,
         required: true
     },
@@ -30,18 +34,14 @@ const productSchema = new mongoose.Schema({
         type: Object,
         required: true
     },
-    category:{
+    roomnumber:{
         type: String,
         required: true
     },
-    checked:{
-        type: Boolean,
+    features:{
+        type: String,
         default: false
     },
-    sold:{
-        type: Number,
-        default: 0
-    }
 }, {
     timestamps: true //important
 })
