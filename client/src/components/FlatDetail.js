@@ -44,7 +44,7 @@ const FlatDetail = () => {
                                 <span className="fd-price">2.350.000₺</span>
                             </div>
                         </div>
-                        <ImageGallery flickThreshold={0.50} slideDuration={0} items={images} showNav={false} showFullscreenButton={false} showPlayButton={false} />
+                        <ImageGallery flickThreshold={0.50} slideDuration={0} items={images} showNav={true} showFullscreenButton={true} showPlayButton={false} />
                         <div className="row">
                             <div className="col-lg-8">
                             <div className="fd-item fd-property-detail">

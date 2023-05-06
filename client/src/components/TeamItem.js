@@ -1,6 +1,15 @@
-import { CardActionArea } from "@mui/material"
+import { CardActionArea, Stack, Button } from "@mui/material"
 
 const TeamItem = () => {
+    const isAdmin = localStorage.getItem('role') === '1' ? true : false
+    const adminRouter = () => {
+        return (
+            <Stack direction="row" spacing={3} bgcolor="white">
+                <Button className='adminButtonPut'>Düzenle</Button>
+                <Button className='adminButtonDelete'>Sil</Button>
+            </Stack>
+        )
+    }
     return (
         <div className="col-lg-4">
             <CardActionArea href="/blog">
@@ -20,6 +29,7 @@ const TeamItem = () => {
                     </div>
                 </div>
             </CardActionArea>
+            {isAdmin ? adminRouter() : null}
         </div>
     )
 }

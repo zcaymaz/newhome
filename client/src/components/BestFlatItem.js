@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom"
 import { Home, Chair, SelectAll, Store } from '@mui/icons-material';
+import { Stack, Button } from "@mui/material";
 
 const BestFlatItem = ({ flatState, flatMoney }) => {
+    const isAdmin = localStorage.getItem('role') === '1' ? true : false
+    const adminRouter = () => {
+        return (
+            <Stack direction="row" spacing={3} bgcolor="white">
+                <Button className='adminButtonPut'>Düzenle</Button>
+                <Button className='adminButtonDelete'>Sil</Button>
+            </Stack>
+        )
+    }
     return (
         <div className="best-estate">
             <div className="best-estate-item">
@@ -32,6 +42,7 @@ const BestFlatItem = ({ flatState, flatMoney }) => {
                     </div>
                     <h5 className="best-estate-price">{flatMoney}</h5>
                 </div>
+                {isAdmin ? adminRouter() : null}
             </div>
         </div>
     )

@@ -1,11 +1,21 @@
 import { Store, Home, Chair, SelectAll } from '@mui/icons-material';
-import { CardActionArea } from "@mui/material";
+import { Button, CardActionArea, Stack } from "@mui/material";
 
 const FlatItem = ({ slug }) => {
+    const isAdmin = localStorage.getItem('role') === '1' ? true : false
+    const adminRouter = () => {
+        return (
+            <Stack direction="row" spacing={3} bgcolor="white">
+                <Button className='adminButtonPut'>Düzenle</Button>
+                <Button className='adminButtonDelete'>Sil</Button>
+            </Stack>
+        )
+    }
+
     return (
         <div className="text-center col-lg-4 col-12 col-md-6 ">
-            <CardActionArea href={`/flat/${slug}`}>
-                <div className="item">
+            <div className="item">
+                <CardActionArea href={`/flat/${slug}`}>
                     <div className="item-image">
                         <img className="img-fluid" src="/img/product1.jpeg" alt="flat" />
                     </div>
@@ -29,8 +39,9 @@ const FlatItem = ({ slug }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </CardActionArea>
+                </CardActionArea>
+                {isAdmin ? adminRouter() : null}
+            </div>
         </div >
     )
 }
