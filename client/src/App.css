@@ -31,6 +31,14 @@
 .header{
   background-color: white;
 }
+.adminButtonPut {
+  color:white !important;
+  background-color: orange !important;
+}
+.adminButtonDelete {
+  color:white !important;
+  background-color: crimson !important;
+}
 .nav-item{
   position: relative;
   padding-right: 10px;
@@ -219,6 +227,12 @@
   font-size: 14px;
   font-weight: 600;
   color:#27282e  !important;
+}
+.nav-link-exit {
+  font-size: 14px;
+  font-weight: 600;
+  color: crimson  !important;
+  text-decoration: none;
 }
 
 .navbar-brand{
