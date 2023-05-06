@@ -22,11 +22,11 @@ UserRouter.get("/", async (req, res)=>{
 
 UserRouter.post("/register", async (req, res)=>{
     try {
-        const {name, email, password} = req.body;
+        const {businessname, email, password, gsmno, vkn} = req.body;
         console.log(req.body);
-        if(name && email && password){
+        if(businessname && email && password && gsmno && vkn){
             const hashPassword = await bcrypt.hash(password, 10)
-            const user = await User.create({name, email, password: hashPassword})
+            const user = await User.create({businessname, email, vkn, gsmno, password: hashPassword})
             res.status(200).json({msg: "user registered successfully", user: user})
         }else{
             res.status(400).json({msg: "please fill the required fields"})
@@ -40,7 +40,6 @@ UserRouter.post("/register", async (req, res)=>{
 UserRouter.post("/login", async (req, res)=>{
     try {
         const {email, password} = req.body;
-        console.log(req.body);
         const existUser = await User.findOne({email})
         if(!existUser){
             return res.status(404).json({error: "user not found"})

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 const Register = () => {
-    const [user, setUser] = useState({name: "", email: "", password: ""})
+    const [user, setUser] = useState({businessname: "", email: "", password: "", gsmno: "", vkn: ""})
     const navigator = useHistory()
   
     const handleChange = (e) => {
@@ -32,8 +32,8 @@ const Register = () => {
             <h2 className='authentication-h2'>Kayıt Ol</h2>
             <form className='authentication-form'>
                 <p>
-                    <label className='authentication-label'>Kullanıcı Adı</label><br />
-                    <input className='authentication-input' type="text" name="name" onChange={handleChange} required />
+                    <label className='authentication-label'>İşletme Adı</label><br />
+                    <input className='authentication-input' type="text" name="businessname" onChange={handleChange} required />
                 </p>
                 <p>
                     <label className='authentication-label'>E-Posta adresi</label><br />
@@ -42,6 +42,14 @@ const Register = () => {
                 <p>
                     <label className='authentication-label'>Şifre</label><br />
                     <input className='authentication-input' type="password" name="password" onChange={handleChange} requiredc />
+                </p>
+                <p>
+                    <label className='authentication-label'>Telefon</label><br />
+                    <input className='authentication-input' type="number" name="gsmno" onChange={handleChange} requiredc />
+                </p>
+                <p>
+                    <label className='authentication-label'>Vergi Kimlik No</label><br />
+                    <input className='authentication-input' type="number" name="vkn" onChange={handleChange} requiredc />
                 </p>
                 <p>
                     <button  className='authentication-button' id="sub_btn" type="submit" onClick={handleSubmit} >Kayıt Ol</button>

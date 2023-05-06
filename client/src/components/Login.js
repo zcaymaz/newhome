@@ -26,10 +26,12 @@ const Login = () => {
         const data = await res.json()
         if (res.ok) {
             localStorage.setItem("token", data.token);
+            localStorage.setItem("token", data.token);
+            alert('Giriş Yapıldı')
             setRefresh(true)
-            navigator("/");
+            return navigator("/");
         } else {
-            console.log(data);
+            console.log("kandırdılar");
         }
     }
     return (
