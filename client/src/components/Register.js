@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const Register = () => {
   const [user, setUser] = useState({
-    businessname: '', email: '', password: '', gsmno: '', vkn: ''
+    name: '', email: '', password: '', gsmno: '', vkn: ''
   })
 
   const onChangeInput = e =>{
@@ -31,7 +31,7 @@ const Register = () => {
             <form className='authentication-form' onSubmit={registerSubmit}>
                 <p>
                     <label className='authentication-label'>İşletme Adı</label><br />
-                    <input className='authentication-input' type="text" value={user.businessname} name="businessname" onChange={onChangeInput}  required />
+                    <input className='authentication-input' type="text" value={user.name} name="name" onChange={onChangeInput}  required />
                 </p>
                 <p>
                     <label className='authentication-label'>E-Posta adresi</label><br />

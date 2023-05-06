@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './App.css';
 import FlatDetail from "./components/FlatDetail"
 import Header from "./components/Header"
@@ -12,10 +12,12 @@ import FlatAdd from './components/FlatAdd';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register';
-import { DataProvider } from './GlobalState';
+import { DataProvider, GlobalState } from './GlobalState';
 
 
 function App() {
+  const state = useContext(GlobalState)
+  
   return (
     <DataProvider>
       <Router>
