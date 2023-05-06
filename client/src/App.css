@@ -182,7 +182,22 @@
   font-size: 15px;
   margin: 0;
 }
+.image-upload-container {
+  width: 300px;
+  height: 300px;
+  border: 2px dashed gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+}
 
+.image-upload-container.dragging {
+  border-color: blue;
+}
 .item-image{
   overflow: hidden;  
 }

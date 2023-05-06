@@ -14,12 +14,13 @@ const Login = () => {
     const loginSubmit = async e =>{
         e.preventDefault()
         try {
-            await axios.post('http://localhost:3001/user/login', {...user})
-
+            axios.post('http://localhost:3001/user/login', {...user}).then((res)=> {
+                localStorage.setItem('role', res.data.role)
+                window.location.href = "/";
+            })
             localStorage.setItem('firstLogin', true)
             localStorage.setItem('email', user.email)
             
-            window.location.href = "/";
         } catch (err) {
             alert(err.response.data.msg)
         }

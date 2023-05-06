@@ -1,8 +1,64 @@
-import React from "react"
+import React, { useState } from 'react'
+import axios from 'axios'
 import { Link } from "react-router-dom"
 import Logo from "./logonavbar.png"
 
 const Header = () => {
+    const isLogged = localStorage.getItem('role') ? true : false
+    const isAdmin = localStorage.getItem('role') === '1' ? true : false
+    const [menu, setMenu] = useState(false)
+
+    const logoutUser = async () => {
+        await axios.get('http://localhost:3001/user/logout')
+
+        localStorage.clear()
+
+        window.location.href = "/";
+    }
+
+    const adminRouter = () => {
+        return (
+            <>
+                <li className="nav-item"><Link className="nav-link" to="/">Ana Sayfa</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/market">İlanlar</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/blog">Projeler</Link></li>
+                <li><Link to="/create_product">Ürün Ekle</Link></li>
+                <li><Link to="/category">Kategoriler</Link></li>
+                <li><Link to="/" onClick={logoutUser}>Çıkış Yap</Link></li>
+            </>
+        )
+    }
+
+    const nobreminadminRouter = () => {
+        return (
+            <>
+                <li className="nav-item"><Link className="nav-link" to="/">Ana Sayfa</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/market">İlanlar</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/blog">Projeler</Link></li>
+                <li className="nav-item"><Link to="/tasks">İlan Ekle</Link></li>
+                <li className="nav-item"><Link to="/tasks">İlanlarım</Link></li>
+                <li><Link to="/history">Profilim</Link></li>
+                <li><Link to="/" onClick={logoutUser}>Çıkış Yap</Link></li>
+            </>
+        )
+    }
+
+    const nobreminloggedRouter = () => {
+        return (
+            <>
+                <li className="nav-item"><Link className="nav-link" to="/">Ana Sayfa</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/market">İlanlar</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/blog">Projeler</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/login">Giriş Yap</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/register">Kayıt Ol</Link></li>
+            </>
+        )
+    }
+
+    const styleMenu = {
+        left: menu ? 0 : "-100%",
+    }
+
     return (
         <div className="header">
             <div className="container">
@@ -17,30 +73,14 @@ const Header = () => {
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="navbar-nav ms-auto">
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/">Ana Sayfa</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/market">İlanlar</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/blog">Projeler</Link>
-                                </li>
-                                {/* <li className="nav-item">
-                                    <Link className="nav-link" to="#">Category <i className="fas fa-chevron-down"></i></Link>
-                                    <ul className="sub-ul">
-                                        <li><Link to="#">item</Link></li>
-                                        <li><Link to="#">item</Link></li>
-                                        <li><Link to="#">item</Link></li>
-                                    </ul>
-                                </li> */}
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/login">Giriş Yap</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/register">Kayıt Ol</Link>
-                                </li>
+                            <ul className="navbar-nav ms-auto" style={styleMenu}>
+                                {
+                                    isLogged ?
+                                    isAdmin ?
+                                    adminRouter() :
+                                    nobreminadminRouter() :
+                                    nobreminloggedRouter()
+                                }
                             </ul>
                         </div>
                     </div>
