@@ -1,58 +1,56 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, {useState} from 'react'
+import axios from 'axios'
 
 const Register = () => {
-    const [user, setUser] = useState({businessname: "", email: "", password: "", gsmno: "", vkn: ""})
-    const navigator = useHistory()
-  
-    const handleChange = (e) => {
-      const name = e.target.name;
-      const value = e.target.value;
-      setUser({...user, [name]: value})
-    }
-  
-    const handleSubmit = async () => {
-      console.log(user);
-      const res = await fetch("http://localhost:3001/api/user/register", {
-        method: "POST",
-        headers:{
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-      })
-      const data = await res.json()
-      if(res.ok){
-        navigator("/login");
-      }else{
-        console.log(data);
-      }
-    }
+  const [user, setUser] = useState({
+    businessname: '', email: '', password: '', gsmno: '', vkn: ''
+  })
+
+  const onChangeInput = e =>{
+    const {name, value} = e.target;
+    setUser({...user, [name]:value})
+  }
+
+  const registerSubmit = async e =>{
+    e.preventDefault()
+        try {
+            await axios.post('/user/register', {...user})
+
+            localStorage.setItem('firstLogin', true)
+
+            
+            window.location.href = "/";
+        } catch (err) {
+            alert(err.response.data.msg)
+        }
+  }
+    
     return (
         <div className="text-center m-5">
             <h2 className='authentication-h2'>Kayıt Ol</h2>
-            <form className='authentication-form'>
+            <form className='authentication-form' onSubmit={registerSubmit}>
                 <p>
                     <label className='authentication-label'>İşletme Adı</label><br />
-                    <input className='authentication-input' type="text" name="businessname" onChange={handleChange} required />
+                    <input className='authentication-input' type="text" value={user.businessname} name="businessname" onChange={onChangeInput}  required />
                 </p>
                 <p>
                     <label className='authentication-label'>E-Posta adresi</label><br />
-                    <input className='authentication-input' type="email" name="email" onChange={handleChange} required />
+                    <input className='authentication-input' type="email" value={user.email} name="email" onChange={onChangeInput}  required />
                 </p>
                 <p>
                     <label className='authentication-label'>Şifre</label><br />
-                    <input className='authentication-input' type="password" name="password" onChange={handleChange} requiredc />
+                    <input className='authentication-input' type="password" value={user.password}  name="password" onChange={onChangeInput}  required />
                 </p>
                 <p>
                     <label className='authentication-label'>Telefon</label><br />
-                    <input className='authentication-input' type="number" name="gsmno" onChange={handleChange} requiredc />
+                    <input className='authentication-input' type="number" value={user.gsmno} name="gsmno" onChange={onChangeInput}  required/>
                 </p>
                 <p>
                     <label className='authentication-label'>Vergi Kimlik No</label><br />
-                    <input className='authentication-input' type="number" name="vkn" onChange={handleChange} requiredc />
+                    <input className='authentication-input' type="number" value={user.vkn} name="vkn" onChange={onChangeInput}  required />
                 </p>
                 <p>
-                    <button  className='authentication-button' id="sub_btn" type="submit" onClick={handleSubmit} >Kayıt Ol</button>
+                    <button  className='authentication-button' id="sub_btn" type="submit" >Kayıt Ol</button>
                 </p>
             </form>
         </div>

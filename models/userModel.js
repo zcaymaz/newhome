@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    name: {
+    businessname: {
         type: String,
         required: true,
         trim: true
@@ -19,9 +19,13 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    cart: {
-        type: Array,
-        default: []
+    gsmno: {
+        type: Number,
+        required: true
+    },
+    vkn: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React from 'react'
 import './App.css';
 import FlatDetail from "./components/FlatDetail"
 import Header from "./components/Header"
@@ -12,15 +12,12 @@ import FlatAdd from './components/FlatAdd';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register';
-
-export const AuthContext = createContext();
+import { DataProvider } from './GlobalState';
 
 
 function App() {
-  const [refresh, setRefresh] = useState(false)
-  const [auth, setAuth] = useState(null);
   return (
-    <AuthContext.Provider value={{ auth, setAuth, refresh, setRefresh }}>
+    <DataProvider>
       <Router>
         <div className="App">
           <Header />
@@ -36,7 +33,7 @@ function App() {
           <Footer />
         </div>
       </Router>
-    </AuthContext.Provider>
+    </DataProvider>
   );
 }
 
