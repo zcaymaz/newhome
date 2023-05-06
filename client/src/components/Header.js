@@ -36,9 +36,6 @@ const Header = () => {
                                     </ul>
                                 </li> */}
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/contact">İletişim</Link>
-                                </li>
-                                <li className="nav-item">
                                     <Link className="nav-link" to="/login">Giriş Yap</Link>
                                 </li>
                                 <li className="nav-item">

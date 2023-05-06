@@ -4,7 +4,6 @@ import FlatDetail from "./components/FlatDetail"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import Home from "./components/Home"
-import Contact from "./components/Contact"
 import Market from "./components/Market"
 import Blog from "./components/Blog"
 import BlogDetail from "./components/BlogDetail"
@@ -24,7 +23,6 @@ function App() {
         <div className="App">
           <Header />
           <Route path="/" exact component={Home}></Route>
-          <Route path="/contact" component={Contact}></Route>
           <Route path="/market" component={Market}></Route>
           <Route path="/blog" exact component={Blog}></Route>
           <Route path="/blog/:id" component={BlogDetail}></Route>
