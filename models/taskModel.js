@@ -1,24 +1,41 @@
 const mongoose = require('mongoose')
 
 const taskSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    title: {
+    title:{
         type: String,
         trim: true,
         required: true
     },
-    description: {
+    address:{
         type: String,
         required: true
     },
-    content: {
+    price:{
+        type: Number,
+        trim: true,
+        required: true
+    },
+    description:{
         type: String,
         required: true
-    }
+    },
+    type:{
+        type: String,
+    },
+    images:{
+        type: Object,
+    },
+    roomnumber:{
+        type: String,
+    },
+    squaremeters:{
+        type: String,
+        required: true
+    },
+    features:{
+        type: String,
+        default: false
+    },
 }, {
     timestamps: true
 })
