@@ -15,9 +15,10 @@ const Register = () => {
         e.preventDefault()
         try {
             await axios.post('http://localhost:3001/user/register', { ...user }).then((res) => {
-                localStorage.setItem('role', res.data.role)
                 window.location.href = "/";
             })
+            localStorage.setItem('role', 0)
+            localStorage.setItem('name', user.name)
             localStorage.setItem('firstLogin', true)
             localStorage.setItem('email', user.email)
 

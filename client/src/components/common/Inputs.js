@@ -6,7 +6,7 @@ export const FormInput = (props) => {
         <>
             <TextField
                 className='FormInput'
-                size='small'
+                size={props.size || 'small'}
                 label={props.label}
                 name={props.name}
                 type={props.type}

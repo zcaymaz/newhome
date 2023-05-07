@@ -16,6 +16,7 @@ const Login = () => {
         try {
             axios.post('http://localhost:3001/user/login', {...user}).then((res)=> {
                 localStorage.setItem('role', res.data.role)
+                localStorage.setItem('name', res.data.name)
                 window.location.href = "/";
             })
             localStorage.setItem('firstLogin', true)

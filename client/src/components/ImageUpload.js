@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const ImageUploader = ({ value = [], onChange }) => {
+const ImageUploader = ({ value = [], onChange, pickImages }) => {
   const [images, setImages] = useState(value || []);
   const fileInputRef = useRef();
 
@@ -35,6 +35,7 @@ const ImageUploader = ({ value = [], onChange }) => {
       };
       reader.readAsDataURL(file);
     }
+    pickImages(newImages);
   };
 
   const handleRemoveImage = (index) => {
@@ -42,11 +43,6 @@ const ImageUploader = ({ value = [], onChange }) => {
     newImages.splice(index, 1);
     setImages(newImages);
     if (onChange) onChange(newImages);
-  };
-
-  const handleUpload = () => {
-    // Yüklenen fotoğrafları Base64 formatına çevirip servise göndermek için gerekli işlemleri yapın
-    console.log(images);
   };
 
   const handleClick = () => {

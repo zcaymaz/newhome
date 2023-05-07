@@ -46,7 +46,7 @@ const FlatItem = (props) => {
                                 <SelectAll fontSize="medium" /><span>{props.squaremeters}</span>
                             </div>
                             <div>
-                                <Store fontSize="medium" /><span>Ertan Emlak</span>
+                                <Store fontSize="medium" /><span></span>
                             </div>
                         </div>
                     </div>

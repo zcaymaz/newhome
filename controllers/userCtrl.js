@@ -59,7 +59,7 @@ const userCtrl = {
                 maxAge: 7*24*60*60*1000 // 7d
             })
 
-            res.json({accesstoken, role:user.role})
+            res.json({accesstoken, role:user.role, name:user.name})
 
         } catch (err) {
             return res.status(500).json({msg: err.message})

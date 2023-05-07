@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react'
-import { Grid, Stack, Typography, Button, TextField, InputLabel, MenuItem, FormControl, Select } from '@mui/material'
-import { FormInput, MultilineFormInput } from './common/Inputs'
+import { Grid, Stack, Typography, Button } from '@mui/material'
+import { FormInput } from './common/Inputs'
 import { SelectResidence, SelectRoomCount } from './common/SelectComp'
 import AutoComp from './common/AutoComp'
-import FileUpload from './FileUpload'
 import { GlobalState } from '../GlobalState'
 import axios from 'axios'
 import ImageUploader from './ImageUpload'
@@ -34,12 +33,12 @@ const FlatAdd = () => {
         e.preventDefault()
         try {
             if (onEdit) {
-                const res = await axios.put(`http://localhost:3001/api/task/${id}`, { useremail: localStorage.getItem('email'), title: title, address: address, price: price, description: description, type: type, images: images, roomnumber: roomnumber, squaremeters: squaremeters, features: features }, {
+                const res = await axios.put(`http://localhost:3001/api/task/${id}`, { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, address: address, price: price, description: description, type: type, images: images, roomnumber: roomnumber, squaremeters: squaremeters, features: features }, {
                     headers: { Authorization: token }
                 })
                 console.log(res.data.msg)
             } else {
-                const res = await axios.post('http://localhost:3001/api/task', { useremail: localStorage.getItem('email'), title: title, address: address, price: price, description: description, type: type, images: images, roomnumber: roomnumber, squaremeters: squaremeters, features: features }, {
+                const res = await axios.post('http://localhost:3001/api/task', { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, address: address, price: price, description: description, type: type, images: images, roomnumber: roomnumber, squaremeters: squaremeters, features: features }, {
                     headers: { Authorization: token }
                 })
                 console.log(res.data.msg)
@@ -55,7 +54,7 @@ const FlatAdd = () => {
             setSquareMeters('')
             setFeatures([])
             setCallback(!callback)
-
+            window.location.href="http://localhost:3000/flatadd"
         } catch (err) {
             alert(err.response.data.msg)
         }
@@ -87,10 +86,6 @@ const FlatAdd = () => {
         }
     }
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
     return (
         <Grid container padding={2} direction='row' sx={{ bgcolor: '#Eef1f3', height: '100vh' }}>
             <Grid item xs='12'>
@@ -110,19 +105,16 @@ const FlatAdd = () => {
                     <Stack direction="row" spacing={3} padding={1}>
                         <SelectResidence name="type" id="type" value={type} onChange={e => setType(e.target.value)} />
                         <SelectRoomCount name="roomnumber" id="roomnumber" value={roomnumber} onChange={e => setRoomNumber(e.target.value)} />
-                        <FormInput label="Metrekare" name="squaremeters" id="squaremeters" value={squaremeters} required onChange={e => setSquareMeters(e.target.value)} />
+                        <FormInput size="medium" label="Metrekare" name="squaremeters" id="squaremeters" value={squaremeters} required onChange={e => setSquareMeters(e.target.value)} />
                     </Stack>
                     <Stack direction="row" spacing={3} padding={1}>
                         <AutoComp value={features} name="features" id="features" onChange={(event, newValue) => { setFeatures(newValue) }} />
                     </Stack>
-                    <ImageUploader value={images} onChange={e => setImages(e.target.value)}/>
+                    <ImageUploader value={images} pickImages={setImages}/>
                     <Button className='TaskCardButton' type='submit'>
                         Onayla
                     </Button>
                 </form>
-            </Grid>
-            <Grid item xs={12}>
-                <FileUpload onFilesUpload={onFilesUpload} />
             </Grid>
         </Grid>
     )
