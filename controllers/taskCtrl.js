@@ -11,10 +11,10 @@ const TaskCtrl = {
     },
     createTask: async (req, res) => {
         try {
-            const { name, title, description, content } = req.body;
+            const {title, address, price, description, type, images, roomnumber, features } = req.body;
 
             const newTask = new Task({
-                name, title, description, content
+                title, address, price, description, type, images, roomnumber, features
             })
 
             await newTask.save()
@@ -33,10 +33,10 @@ const TaskCtrl = {
     },
     updateTask: async (req, res) => {
         try {
-            const { name, title, description, content } = req.body;
+            const { title, address, price, description, type, images, roomnumber, features } = req.body;
 
             await Task.findOneAndUpdate({ _id: req.params.id }, {
-                name, title, description, content
+                title, address, price, description, type, images, roomnumber, features
             })
 
             res.json({ msg: "Task Güncellendi." })
