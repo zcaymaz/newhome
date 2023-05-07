@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import FlatItem from "./FlatItem"
 import Combobox from "./common/Combobox"
+import Footer from "./Footer";
 
 const Market = () => {
     const [search, setSearch] = useState();
@@ -30,54 +31,57 @@ const Market = () => {
         }
     }
     return (
-        <section className="about">
-            <div className="page-top">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h1 className="page-title">İlanlar</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <section className="section-market">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-2">
-                            <Combobox label="İl-İlçe" />
-                        </div>
-                        <div className="col-lg-2">
-                            <Combobox label="Fiyat" />
-                        </div>
-                        <div className="col-lg-2">
-                            <Combobox label="Oda Sayısı" />
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="search-area2">
-                                <input value={word} onChange={(e) => findSearch(e)} type="text" className="inp-search" placeholder="İl,ilçe,mahalle..." />
-                                <button className="btn-search2">
-                                    <i className="fas fa-search" style={{ marginRight: '8px' }} />
-                                    Ara
-                                </button>
+        <>
+            <section className="about">
+                <div className="page-top">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <h1 className="page-title">İlanlar</h1>
                             </div>
-                            {findResult()}
                         </div>
                     </div>
                 </div>
-            </section>
-            <section className="section-all-re">
-                <div className="container">
-                    <div className="row">
-                        <FlatItem slug="lorem-ipsum-1" />
-                        <FlatItem slug="lorem-ipsum-2" />
-                        <FlatItem slug="lorem-ipsum-3" />
-                        <FlatItem slug="lorem-ipsum-4" />
-                        <FlatItem slug="lorem-ipsum-5" />
-                        <FlatItem slug="lorem-ipsum-6" />
+                <section className="section-market">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-2">
+                                <Combobox label="İl-İlçe" />
+                            </div>
+                            <div className="col-lg-2">
+                                <Combobox label="Fiyat" />
+                            </div>
+                            <div className="col-lg-2">
+                                <Combobox label="Oda Sayısı" />
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="search-area2">
+                                    <input value={word} onChange={(e) => findSearch(e)} type="text" className="inp-search" placeholder="İl,ilçe,mahalle..." />
+                                    <button className="btn-search2">
+                                        <i className="fas fa-search" style={{ marginRight: '8px' }} />
+                                        Ara
+                                    </button>
+                                </div>
+                                {findResult()}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </section>
+                <section className="section-all-re">
+                    <div className="container">
+                        <div className="row">
+                            <FlatItem slug="lorem-ipsum-1" />
+                            <FlatItem slug="lorem-ipsum-2" />
+                            <FlatItem slug="lorem-ipsum-3" />
+                            <FlatItem slug="lorem-ipsum-4" />
+                            <FlatItem slug="lorem-ipsum-5" />
+                            <FlatItem slug="lorem-ipsum-6" />
+                        </div>
+                    </div>
+                </section>
             </section>
-        </section>
+            <Footer />
+        </>
     )
 }
 

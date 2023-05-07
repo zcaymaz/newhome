@@ -21,7 +21,7 @@ const Header = () => {
                 <li className="nav-item"><Link className="nav-link" to="/">Ana Sayfa</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/market">İlanlar</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/blog">Projeler</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/create_product">Kontrol Paneli</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/dashboard">Kontrol Paneli</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/" onClick={logoutUser}>Çıkış Yap</Link></li>
             </>
         )
@@ -33,9 +33,8 @@ const Header = () => {
                 <li className="nav-item"><Link className="nav-link" to="/">Ana Sayfa</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/market">İlanlar</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/blog">Projeler</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/tasks">İlan Ekle</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/tasks">İlanlarım</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/history">Profilim</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/flatadd">İlan Ekle</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/myprofile">Profilim</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/" onClick={logoutUser}>Çıkış Yap</Link></li>
             </>
         )

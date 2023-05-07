@@ -7,16 +7,18 @@ const TeamList = () => {
         description: ""
     }
     return (
-        <section className="section-teams">
-            <div className="container">
-                <Title title={title.text} description={title.description} />
-                <div className="row">
-                    <TeamItem/>
-                    <TeamItem/>
-                    <TeamItem/>
+        <>
+            <section className="section-teams">
+                <div className="container">
+                    <Title title={title.text} description={title.description} />
+                    <div className="row">
+                        <TeamItem />
+                        <TeamItem />
+                        <TeamItem />
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     )
 }
 
