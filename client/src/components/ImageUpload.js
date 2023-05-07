@@ -57,7 +57,9 @@ const ImageUploader = ({ value = [], onChange, pickImages }) => {
         {images.map((image, index) => (
           <div className="image-container" key={index}>
             <button className="remove-image" onClick={() => handleRemoveImage(index)}>X</button>
-            <img src={image} alt={`Image ${index + 1}`} />
+            <center>
+              <img className="imageuploadphoto" src={image} alt={`Image ${index + 1}`} />
+            </center>
           </div>
         ))}
       </div>

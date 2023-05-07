@@ -26,6 +26,7 @@ export const MultilineInput = (props) => {
                 className='MultilineInput'
                 multiline
                 rows={props.rows}
+                name={props.name}
                 type={props.type}
                 placeholder={props.placeholder}
                 text={props.text}
@@ -45,6 +46,9 @@ export const MultilineFormInput = (props) => {
                 label={props.label}
                 multiline
                 rows={3}
+                name={props.name}
+                value={props.value}
+                onChange={props.onChange}
             />
         </>
     )

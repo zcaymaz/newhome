@@ -19,10 +19,10 @@ const TaskCtrl = {
     },
     createTask: async (req, res) => {
         try {
-            const { name, useremail, title, address, price, description, type, images, roomnumber, features, squaremeters } = req.body;
+            const { name, useremail, title, address, price, description, type, images, roomnumber, saletype, features, squaremeters } = req.body;
 
             const newTask = new Task({
-                name, useremail, title, address, price, description, type, images, roomnumber, features, squaremeters
+                name, useremail, title, address, price, description, type, images, roomnumber, saletype, features, squaremeters
             })
 
             await newTask.save()
@@ -41,10 +41,10 @@ const TaskCtrl = {
     },
     updateTask: async (req, res) => {
         try {
-            const { name, useremail, title, address, price, description, type, images, roomnumber, features, squaremeters } = req.body;
+            const { name, useremail, title, address, price, description, type, images, roomnumber, saletype, features, squaremeters } = req.body;
 
             await Task.findOneAndUpdate({ _id: req.params.id }, {
-                name, useremail, title, address, price, description, type, images, roomnumber, features, squaremeters
+                name, useremail, title, address, price, description, type, images, roomnumber, saletype, features, squaremeters
             })
 
             res.json({ msg: "Task Güncellendi." })

@@ -36,6 +36,9 @@ const taskSchema = new mongoose.Schema({
     roomnumber:{
         type: String,
     },
+    saletype:{
+        type: String,
+    },
     squaremeters:{
         type: String,
     },

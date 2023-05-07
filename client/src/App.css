@@ -9,10 +9,12 @@
 }
 .image-uploader {
   border: 2px dashed #ccc;
+  border-radius: 10px;
   padding: 20px;
   text-align: center;
   margin: 20px;
   min-height: 200px;
+  background-color: #fff;
 }
 
 .drop-message {
@@ -948,4 +950,21 @@ img {
 .footerMenu {
   text-decoration: none;
   color: #ffffff8a;
+}
+
+.imageuploadphoto {
+  height: 230px !important;
+  max-width: 230px !important;
+  border: 2px solid #6b0707 ;
+}
+
+.flattAddContainer {
+  background-color: #f0f0f0;
+}
+
+.FlatAddButton {
+  background-color: #12b40c !important;
+  color : #fff !important;
+  height: 50px;
+  width: 80vh;
 }
