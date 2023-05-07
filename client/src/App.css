@@ -7,6 +7,47 @@
 .Logo {
   width: 100px;
 }
+.image-uploader {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  margin: 20px;
+  min-height: 200px;
+}
+
+.drop-message {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-container {
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.remove-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 2px 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .FormInput {
   width: 100%;
   background: #FEFCFD;

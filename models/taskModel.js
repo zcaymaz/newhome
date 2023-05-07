@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const taskSchema = new mongoose.Schema({
+    useremail: {
+        type:String,
+        required: true
+    },
     title:{
         type: String,
         trim: true,
@@ -23,17 +27,16 @@ const taskSchema = new mongoose.Schema({
         type: String,
     },
     images:{
-        type: Object,
+        type: Array,
     },
     roomnumber:{
         type: String,
     },
     squaremeters:{
         type: String,
-        required: true
     },
     features:{
-        type: String,
+        type: Array,
         default: false
     },
 }, {

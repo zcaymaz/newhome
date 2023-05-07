@@ -8,8 +8,11 @@ router.route('/task')
     .get(TaskCtrl.getTasks)
     .post(TaskCtrl.createTask)
 
-router.route('task/:id')
+router.route('/task/:id')
     .delete(auth, TaskCtrl.deleteTask)
     .put(auth, TaskCtrl.updateTask)
+
+router.route('/task/email')
+    .post(TaskCtrl.getTasksUser)
 
 module.exports = router

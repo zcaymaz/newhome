@@ -1,7 +1,7 @@
 import { Store, Home, Chair, SelectAll } from '@mui/icons-material';
 import { Button, CardActionArea, Stack } from "@mui/material";
 
-const FlatItem = ({ slug }) => {
+const FlatItem = (props) => {
     const isAdmin = localStorage.getItem('role') === '1' ? true : false
     const adminRouter = () => {
         return (
@@ -11,31 +11,42 @@ const FlatItem = ({ slug }) => {
             </Stack>
         )
     }
-
+    function formatCurrency(price) {
+        const amount = price || 0
+        const formattedAmount = amount.toLocaleString('tr-TR', {
+            style: 'currency',
+            currency: 'TRY',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+        const tlIndex = formattedAmount.indexOf('₺');
+        const formattedAmountWithSymbolAtEnd = formattedAmount.slice(0, tlIndex) + formattedAmount.slice(tlIndex + 1) + ' ₺';
+        return formattedAmountWithSymbolAtEnd;
+    }
     return (
         <div className="text-center col-lg-4 col-12 col-md-6 ">
             <div className="item">
-                <CardActionArea href={`/flat/${slug}`}>
+                <CardActionArea href={`/flat/`}>
                     <div className="item-image">
                         <img className="img-fluid" src="/img/product1.jpeg" alt="flat" />
                     </div>
                     <div className="item-description">
                         <div className="d-flex justify-content-between mb-3">
-                            <span className="item-title">Bursa Gemlikde Deniz Manzaralı Daire</span>
-                            <span className="item-price">3.500.000₺</span>
+                            <span className="item-title">{props.title}</span>
+                            <span className="item-price">{formatCurrency(props.price)}</span>
                         </div>
                         <div className="item-icon d-flex alig-items-center justify-content-between">
                             <div>
-                                <Home fontSize="medium" /><span>Daire</span>
+                                <Home fontSize="medium" /><span>{props.type}</span>
                             </div>
                             <div>
-                                <Chair fontSize="medium" /><span> 3+1 </span>
+                                <Chair fontSize="medium" /><span>{props.roomnumber}</span>
                             </div>
                             <div>
-                                <SelectAll fontSize="medium" /><span> 120m2 </span>
+                                <SelectAll fontSize="medium" /><span>{props.squaremeters}</span>
                             </div>
                             <div>
-                                <Store fontSize="medium" /><span> Altın Emlak </span>
+                                <Store fontSize="medium" /><span>Ertan Emlak</span>
                             </div>
                         </div>
                     </div>

@@ -9,12 +9,20 @@ const TaskCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    getTasksUser: async (req, res) => {
+        try {
+            const tasks = await Task.find({useremail : req.body.useremail})
+            res.json(tasks)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
     createTask: async (req, res) => {
         try {
-            const {title, address, price, description, type, images, roomnumber, features } = req.body;
+            const {useremail, title, address, price, description, type, images, roomnumber, features, squaremeters } = req.body;
 
             const newTask = new Task({
-                title, address, price, description, type, images, roomnumber, features
+                useremail, title, address, price, description, type, images, roomnumber, features, squaremeters
             })
 
             await newTask.save()
@@ -33,10 +41,10 @@ const TaskCtrl = {
     },
     updateTask: async (req, res) => {
         try {
-            const { title, address, price, description, type, images, roomnumber, features } = req.body;
+            const { useremail, title, address, price, description, type, images, roomnumber, features, squaremeters } = req.body;
 
             await Task.findOneAndUpdate({ _id: req.params.id }, {
-                title, address, price, description, type, images, roomnumber, features
+                title, address, price, description, type, images, roomnumber, features, squaremeters
             })
 
             res.json({ msg: "Task Güncellendi." })
