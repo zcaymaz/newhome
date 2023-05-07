@@ -1,28 +1,53 @@
-
-import Title from "./Title"
-import FlatItem from "./FlatItem"
+import React, { useEffect, useState } from 'react';
+import Title from "./Title";
+import FlatItem from "./FlatItem";
+import axios from 'axios';
 
 const FlatList = () => {
-    const title = {
-        text: "Öne Çıkan İlanlar",
-        description: ""
-    }
-    return (
-        <section className="section-all-re">
-            <div className="container">
-                <Title title={title.text} description={title.description} />
-                <div className="row">
-                    <FlatItem slug="lorem-ipsum-1" />
-                    <FlatItem slug="lorem-ipsum-2" />
-                    <FlatItem slug="lorem-ipsum-3" />
-                    <FlatItem slug="lorem-ipsum-4" />
-                    <FlatItem slug="lorem-ipsum-5" />
-                    <FlatItem slug="lorem-ipsum-6" />  
-                </div>
-            </div>
-        </section>
-    )
+  const [flats, setFlats] = useState([]);
 
-}
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/task/`, {
+      params: { useremail: localStorage.getItem('email'), name: localStorage.getItem('name') }
+    })
+      .then((res) => {
+        const data = res.data.map((flat) => ({
+          ...flat,
+          images: flat.images.map((image) => {
+            const img = new Image();
+            img.src = `data:image/jpeg;base64,${image}`;
+            return { original: img.src, thumbnail: img.src };
+          })
+        }));
+        setFlats(data);
+      })
+      .catch((error) => { console.error(error); });
+  }, []);
+
+  const title = {
+    text: "Öne Çıkan İlanlar",
+    description: ""
+  };
+
+  return (
+    <section className="section-all-re">
+      <div className="container">
+        <Title title={title.text} description={title.description} />
+        <div className="row">
+          {flats.map((flat) => (
+            <FlatItem
+              name={flat.name}
+              title={flat.title}
+              price={flat.price}
+              type={flat.type}
+              roomnumber={flat.roomnumber}
+              squaremeters={flat.squaremeters}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default FlatList;
