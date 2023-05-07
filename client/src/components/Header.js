@@ -27,7 +27,7 @@ const Header = () => {
         )
     }
 
-    const nobreminadminRouter = () => {
+    const nonAdminRouter = () => {
         return (
             <>
                 <li className="nav-item"><Link className="nav-link" to="/">Ana Sayfa</Link></li>
@@ -40,7 +40,7 @@ const Header = () => {
         )
     }
 
-    const nobreminloggedRouter = () => {
+    const noLoggedRouter = () => {
         return (
             <>
                 <li className="nav-item"><Link className="nav-link" to="/">Ana Sayfa</Link></li>
@@ -71,8 +71,8 @@ const Header = () => {
                                     isLogged ?
                                     isAdmin ?
                                     adminRouter() :
-                                    nobreminadminRouter() :
-                                    nobreminloggedRouter()
+                                    nonAdminRouter() :
+                                    noLoggedRouter()
                                 }
                             </ul>
                         </div>

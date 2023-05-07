@@ -318,7 +318,7 @@ img {
 }
 
 .footer{
-  padding:4rem 0;
+  padding:2.5rem 0;
   background: #27282e;
   color:white;
 }
@@ -944,3 +944,8 @@ img {
 }
 
 /* Login Register End */
+
+.footerMenu {
+  text-decoration: none;
+  color: #ffffff8a;
+}
