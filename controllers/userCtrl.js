@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const userCtrl = {
     register: async (req, res) =>{
         try {
-            const {name, email, password, vkn, gsmno} = req.body;
+            const {name, email, password, vkn, gsmno, address} = req.body;
 
             const user = await Users.findOne({email})
             if(user) return res.status(400).json({msg: "The email already exists."})
@@ -17,7 +17,7 @@ const userCtrl = {
             // Password Encryption
             const passwordHash = await bcrypt.hash(password, 10)
             const newUser = new Users({
-                name, email, password: passwordHash , vkn , gsmno
+                name, email, password: passwordHash , vkn , gsmno, address
             })
 
             // Save mongodb
@@ -59,7 +59,7 @@ const userCtrl = {
                 maxAge: 7*24*60*60*1000 // 7d
             })
 
-            res.json({accesstoken, role:user.role, name:user.name})
+            res.json({accesstoken, role:user.role, name:user.name, vkn:user.vkn, gsmno:user.gsmno, address:user.address})
 
         } catch (err) {
             return res.status(500).json({msg: err.message})

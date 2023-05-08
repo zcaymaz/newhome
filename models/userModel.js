@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     vkn: {
         type: String,
         required: true
+    },
+    address: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

@@ -48,6 +48,7 @@ export const MultilineFormInput = (props) => {
                 label={props.label}
                 multiline
                 rows={3}
+                placeholder={props.placeholder}
                 name={props.name}
                 value={props.value}
                 onChange={props.onChange}

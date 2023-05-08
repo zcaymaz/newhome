@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Grid, Input, InputLabel, Typography } from '@mui/material'
+import { Avatar, Grid, InputLabel, Typography } from '@mui/material'
 import FlatItem from './FlatItem'
 import Title from './Title'
 import axios from 'axios'
@@ -20,7 +20,7 @@ const MyProfile = () => {
                         <Grid item xs={12} md={6} p={1} justifyContent="center">
                             <center>
                                 <Avatar src={logo} sx={{ width: 170, height: 170, border: '1px solid #ededed' }} />
-                                <Typography sx={{ fontSize: '20px' }}>Güzel Emlak</Typography>
+                                <Typography sx={{ fontSize: '20px' }}>{localStorage.getItem('name')}</Typography>
                             </center>
                         </Grid>
                         <Grid item xs={12} md={6} pl={1}>
@@ -28,12 +28,12 @@ const MyProfile = () => {
                                 <Grid item xs={12} pt={1}>
                                     <div>
                                         <InputLabel>Telefon Numarası:</InputLabel>
-                                        <FormInput disabled />
+                                        <FormInput placeholder={localStorage.getItem('gsmno')} disabled />
                                     </div>
                                 </Grid>
                                 <Grid item xs pt={1}>
                                     <InputLabel>Adres:</InputLabel>
-                                    <MultilineFormInput disabled />
+                                    <MultilineFormInput placeholder={localStorage.getItem('address')} disabled />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -48,6 +48,7 @@ const MyProfile = () => {
                                 {myAds.map((ad) => (
                                     <>
                                         <FlatItem
+                                            name={ad.name}
                                             title={ad.title}
                                             price={ad.price}
                                             type={ad.type}
