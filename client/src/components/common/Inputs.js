@@ -14,6 +14,7 @@ export const FormInput = (props) => {
                 text={props.text}
                 value={props.value}
                 onChange={props.onChange}
+                disabled={props.disabled}
             />
         </>
     )
@@ -32,6 +33,7 @@ export const MultilineInput = (props) => {
                 text={props.text}
                 value={props.value}
                 onChange={props.onChange}
+                disabled={props.disabled}
             />
         </>
     )
@@ -49,6 +51,7 @@ export const MultilineFormInput = (props) => {
                 name={props.name}
                 value={props.value}
                 onChange={props.onChange}
+                disabled={props.disabled}
             />
         </>
     )

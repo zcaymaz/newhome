@@ -37,16 +37,16 @@ const FlatItem = (props) => {
                         </div>
                         <div className="item-icon d-flex alig-items-center justify-content-between">
                             <div>
-                                <Home fontSize="medium" /><span>{props.type}</span>
+                                <Home fontSize="small" /><span>{props.type}</span>
                             </div>
                             <div>
-                                <Chair fontSize="medium" /><span>{props.roomnumber}</span>
+                                <Chair fontSize="small" /><span>{props.roomnumber}</span>
                             </div>
                             <div>
-                                <SelectAll fontSize="medium" /><span>{props.squaremeters}</span>
+                                <SelectAll fontSize="small" /><span>{props.squaremeters}</span>
                             </div>
                             <div>
-                                <Store fontSize="medium" /><span>{props.name}</span>
+                                <Store fontSize="small" /><span>{props.name}</span>
                             </div>
                         </div>
                     </div>

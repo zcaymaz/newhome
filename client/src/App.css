@@ -283,6 +283,7 @@ img {
   font-weight: bold;
 }
 .item-description{
+  font-size: 18px;
   padding:15px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-bottom-right-radius: 8px;
@@ -301,18 +302,18 @@ img {
 }
 .section-all-re .item-price{
   font-weight: bold;
-  font-size: 25px;
+  font-size: 14px;
   color: #364465;
+  display: block;
 }
 .item .fas{
   color:#364465
 }
 .item-icon{
   color:black;
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 400;
+  font-size: 12px;
   display: flex;
-  align-items: center;
 }
 .btn-detail{
   background-color: #364465;
@@ -637,8 +638,8 @@ img {
 /* Contact End*/
 
 .section-references,.section-teams,.section-best-estate,.section-all-re{
-  padding-top: 70px;
-  padding-bottom: 70px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 .section-market {
   padding-top: 25px;
