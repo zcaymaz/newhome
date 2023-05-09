@@ -77,10 +77,12 @@ img {
 .adminButtonPut {
   color:white !important;
   background-color: orange !important;
+  width: 50%;
 }
 .adminButtonDelete {
   color:white !important;
   background-color: crimson !important;
+  width: 50%;
 }
 .nav-item{
   position: relative;

@@ -5,7 +5,7 @@ const FlatItem = (props) => {
     const isAdmin = localStorage.getItem('role') === '1' ? true : false
     const adminRouter = () => {
         return (
-            <Stack direction="row" spacing={3} bgcolor="white">
+            <Stack direction="row" spacing={3} alignItems="center" justifyContent="center">
                 <Button className='adminButtonPut'>Düzenle</Button>
                 <Button className='adminButtonDelete'>Sil</Button>
             </Stack>

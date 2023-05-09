@@ -3,11 +3,32 @@ import { Link } from "react-router-dom";
 import FlatItem from "./FlatItem"
 import Combobox from "./common/Combobox"
 import Footer from "./Footer";
+import axios from 'axios'
 
 const Market = () => {
     const [search, setSearch] = useState();
     const [find, setFind] = useState([]);
     const [word, setWord] = useState("");
+    const [flats, setFlats] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/task/`, {
+            params: { useremail: localStorage.getItem('email'), name: localStorage.getItem('name') }
+        })
+            .then((res) => {
+                const data = res.data.map((flat) => ({
+                    ...flat,
+                    images: flat.images.map((image) => {
+                        const img = new Image();
+                        img.src = `data:image/jpeg;base64,${image}`;
+                        return { original: img.src, thumbnail: img.src };
+                    })
+                }));
+                setFlats(data);
+            })
+            .catch((error) => { console.error(error); });
+    }, []);
+
     useEffect(() => {
         setSearch(["a", "b", "test", "mb"])
     }, [])
@@ -30,6 +51,8 @@ const Market = () => {
             </div>
         }
     }
+
+
     return (
         <>
             <section className="about">
@@ -70,12 +93,16 @@ const Market = () => {
                 <section className="section-all-re">
                     <div className="container">
                         <div className="row">
-                            <FlatItem slug="lorem-ipsum-1" />
-                            <FlatItem slug="lorem-ipsum-2" />
-                            <FlatItem slug="lorem-ipsum-3" />
-                            <FlatItem slug="lorem-ipsum-4" />
-                            <FlatItem slug="lorem-ipsum-5" />
-                            <FlatItem slug="lorem-ipsum-6" />
+                            {flats.map((flat) => (
+                                <FlatItem
+                                    name={flat.name}
+                                    title={flat.title}
+                                    price={flat.price}
+                                    type={flat.type}
+                                    roomnumber={flat.roomnumber}
+                                    squaremeters={flat.squaremeters}
+                                />
+                            ))}
                         </div>
                     </div>
                 </section>
