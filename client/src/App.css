@@ -971,3 +971,8 @@ img {
   height: 50px;
   width: 80vh;
 }
+
+.image-gallery-slide img {
+  width: 100%;
+  height: 400px;
+}

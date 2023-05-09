@@ -101,6 +101,7 @@ const Market = () => {
                                     type={flat.type}
                                     roomnumber={flat.roomnumber}
                                     squaremeters={flat.squaremeters}
+                                    onClick={() => localStorage.setItem('flatId', flat._id)}
                                 />
                             ))}
                         </div>
