@@ -4,40 +4,37 @@ import { Store } from "@mui/icons-material";
 import axios from 'axios';
 
 const FlatDetail = () => {
-    const [flats, setFlats] = useState([]);
+    const [flat, setFlat] = useState({});
+    const [flatImages, setFlatImages] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/api/task/${localStorage.getItem('flatId')}`, {
             params: { ObjectId: localStorage.getItem('flatId') }
         })
             .then((res) => {
-                const data = res.data.map((flat) => ({
-                    ...flat,
-                    images: flat.images.map((image) => {
-                        const img = new Image();
-                        img.src = `data:image/jpeg;base64,${image}`;
-                        return { original: img.src, thumbnail: img.src };
-                    })
-                }));
-                setFlats(data);
+                console.log(res);
+                setFlat(res.data);
+                res.data.images.map((image) => {
+                    setFlatImages((oldImages) => [...oldImages, {
+                        original: image, thumbnail: image
+                    }])
+                });
             })
             .catch((error) => { console.error(error); });
     }, []);
 
-    const images = [
-        {
-            original: '/img/product1.jpeg',
-            thumbnail: '/img/product1.jpeg',
-        },
-        {
-            original: '/img/banner.jpg',
-            thumbnail: '/img/banner.jpg',
-        },
-        {
-            original: '/img/product1.jpeg',
-            thumbnail: '/img/product1.jpeg',
-        },
-    ];
+    function formatCurrency(price) {
+        const amount = price || 0
+        const formattedAmount = amount.toLocaleString('tr-TR', {
+            style: 'currency',
+            currency: 'TRY',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+        const tlIndex = formattedAmount.indexOf('₺');
+        const formattedAmountWithSymbolAtEnd = formattedAmount.slice(0, tlIndex) + formattedAmount.slice(tlIndex + 1) + ' ₺';
+        return formattedAmountWithSymbolAtEnd;
+    }
 
     return (
         <div className="flat-detail">
@@ -55,17 +52,17 @@ const FlatDetail = () => {
                     <div className="col-lg-12">
                         <div className="fd-top flat-detail-content">
                             <div>
-                                <h3 className="flat-detail-title">{flats.title}</h3>
+                                <h3 className="flat-detail-title">{flat.title}</h3>
                                 <p className="fd-address">
                                     <i className="fas fa-map-marker-alt" />
-                                    İlan Adresi
+                                    {flat.address}
                                 </p>
                             </div>
                             <div>
-                                <span className="fd-price">2.350.000₺</span>
+                                <span className="fd-price">{formatCurrency(flat.price)}</span>
                             </div>
                         </div>
-                        <ImageGallery flickThreshold={0.50} slideDuration={0} items={images} showNav={true} showFullscreenButton={true} showPlayButton={false} />
+                        <ImageGallery flickThreshold={0.50} slideDuration={0} items={flatImages} showNav={true} showFullscreenButton={true} showPlayButton={false} />
                         <div className="row">
                             <div className="col-lg-8">
                                 <div className="fd-item fd-property-detail">
@@ -73,68 +70,31 @@ const FlatDetail = () => {
                                     <div className="row">
                                         <div className="col-lg-3">
                                             <span>Mesken:  </span>
-                                            <span>Daire</span>
+                                            <span>{flat.type}</span>
                                         </div>
                                         <div className="col-lg-3">
                                             <span>Metrekare:  </span>
-                                            <span>5</span>
+                                            <span>{flat.squaremeters}</span>
                                         </div>
                                         <div className="col-lg-3">
                                             <span>Oda Sayısı:  </span>
-                                            <span>1+1</span>
+                                            <span>{flat.roomnumber}</span>
                                         </div>
                                         <div className="col-lg-3">
                                             <span>Emlak Tipi: </span>
-                                            <span>Kiralık</span>
+                                            <span>{flat.saletype}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="fd-item">
                                     <h4>İlan Açıklaması</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                                </div>
+                                    <p>{flat.description}</p></div>
                                 <div className="fd-item fd-features">
                                     <h4>İlan Özellikleri</h4>
                                     <div className="row">
                                         <div className="col-lg-4">
-                                            <i className="fa fa-check"></i>
-                                            <span>Isı Yalıtımı</span>
-                                        </div>
-                                        <div className="col-lg-4">
                                             <i className="fa fa-check" ></i>
-                                            <span>Yangın Alarmı</span>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check" ></i>
-                                            <span>Asansör</span>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check" ></i>
-                                            <span>Isıcam</span>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check" ></i>
-                                            <span>PVC Doğrama</span>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check"></i>
-                                            <span>Ses Yalıtımı</span>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check" ></i>
-                                            <span>Güvenlik</span>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check" ></i>
-                                            <span>Jeneratör</span>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check" ></i>
-                                            <span>Bahçe</span>
+                                            <span>Features</span>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +108,7 @@ const FlatDetail = () => {
                                     <h4>Evi Envanterinde Tutan</h4>
                                     <ul className="category-ul">
                                         <div>
-                                            <Store fontSize="medium" /><span> Günal Emlak </span>
+                                            <Store fontSize="large" /><span> {flat.name} </span>
                                         </div>
                                     </ul>
                                 </div>
