@@ -18,7 +18,7 @@ const DashBoard = () => {
                             aria-controls="panel1bh-content"
                             id="panel1bh-header">
                             <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                                General settings
+                                İlanları Düzenle
                             </Typography>
                             <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
                         </AccordionSummary>
@@ -36,7 +36,7 @@ const DashBoard = () => {
                             id="panel2bh-header">
                             <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
                             <Typography sx={{ color: 'text.secondary' }}>
-                                You are currently not an owner
+                                Projeleri Düzenle
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -53,7 +53,7 @@ const DashBoard = () => {
                             aria-controls="panel3bh-content"
                             id="panel3bh-header">
                             <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                                Advanced settings
+                                Kullanıcı Düzenle
                             </Typography>
                             <Typography sx={{ color: 'text.secondary' }}>
                                 Filtering has been entirely disabled for whole web server
