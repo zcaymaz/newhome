@@ -50,17 +50,21 @@ const FlatDetail = () => {
                             <div className="fd-item fd-property-detail">
                                     <h4>İlan Bilgileri</h4>
                                     <div className="row">
-                                        <div className="col-lg-4">
+                                        <div className="col-lg-3">
                                             <span>Mesken:  </span>
                                             <span>Daire</span>
                                         </div>
-                                        <div className="col-lg-4">
+                                        <div className="col-lg-3">
                                             <span>Metrekare:  </span>
                                             <span>5</span>
                                         </div>
-                                        <div className="col-lg-4">
+                                        <div className="col-lg-3">
                                             <span>Oda Sayısı:  </span>
                                             <span>1+1</span>
+                                        </div>
+                                        <div className="col-lg-3">
+                                            <span>Emlak Tipi: </span>
+                                            <span>Kiralık</span>
                                         </div>
                                     </div>
                                 </div>
