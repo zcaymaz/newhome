@@ -6,6 +6,7 @@ import axios from 'axios';
 const FlatDetail = () => {
     const [flat, setFlat] = useState({});
     const [flatImages, setFlatImages] = useState([]);
+    const [flatFeatures, setFlatFeatures] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/api/task/${localStorage.getItem('flatId')}`, {
@@ -19,6 +20,7 @@ const FlatDetail = () => {
                         original: image, thumbnail: image
                     }])
                 });
+                setFlatFeatures(res.data.features);
             })
             .catch((error) => { console.error(error); });
     }, []);
@@ -92,10 +94,12 @@ const FlatDetail = () => {
                                 <div className="fd-item fd-features">
                                     <h4>İlan Özellikleri</h4>
                                     <div className="row">
-                                        <div className="col-lg-4">
-                                            <i className="fa fa-check" ></i>
-                                            <span>Features</span>
-                                        </div>
+                                        {flatFeatures.map((feature, index) => (
+                                            <div className="col-lg-4" key={index}>
+                                                <i className="fa fa-check"></i>
+                                                <span>{feature.title}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                                 <div className="fd-item">
