@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ImageGallery from 'react-image-gallery';
 import { Store } from "@mui/icons-material";
+import axios from 'axios';
 
 const FlatDetail = () => {
+    const [flats, setFlats] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/task/${localStorage.getItem('flatId')}`, {
+            params: { ObjectId: localStorage.getItem('flatId') }
+        })
+            .then((res) => {
+                const data = res.data.map((flat) => ({
+                    ...flat,
+                    images: flat.images.map((image) => {
+                        const img = new Image();
+                        img.src = `data:image/jpeg;base64,${image}`;
+                        return { original: img.src, thumbnail: img.src };
+                    })
+                }));
+                setFlats(data);
+            })
+            .catch((error) => { console.error(error); });
+    }, []);
+
     const images = [
         {
             original: '/img/product1.jpeg',
@@ -34,7 +55,7 @@ const FlatDetail = () => {
                     <div className="col-lg-12">
                         <div className="fd-top flat-detail-content">
                             <div>
-                                <h3 className="flat-detail-title">İlan Başlığı.</h3>
+                                <h3 className="flat-detail-title">{flats.title}</h3>
                                 <p className="fd-address">
                                     <i className="fas fa-map-marker-alt" />
                                     İlan Adresi
@@ -47,7 +68,7 @@ const FlatDetail = () => {
                         <ImageGallery flickThreshold={0.50} slideDuration={0} items={images} showNav={true} showFullscreenButton={true} showPlayButton={false} />
                         <div className="row">
                             <div className="col-lg-8">
-                            <div className="fd-item fd-property-detail">
+                                <div className="fd-item fd-property-detail">
                                     <h4>İlan Bilgileri</h4>
                                     <div className="row">
                                         <div className="col-lg-4">
@@ -165,5 +186,4 @@ const FlatDetail = () => {
         </div>
     )
 }
-
-export default FlatDetail
+export default FlatDetail;

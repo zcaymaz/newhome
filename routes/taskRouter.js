@@ -9,6 +9,7 @@ router.route('/task')
     .post(TaskCtrl.createTask)
 
 router.route('/task/:id')
+    .get(TaskCtrl.getTaskById)
     .delete(auth, TaskCtrl.deleteTask)
     .put(auth, TaskCtrl.updateTask)
 

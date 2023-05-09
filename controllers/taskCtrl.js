@@ -11,10 +11,27 @@ const TaskCtrl = {
     },
     getTasksUser: async (req, res) => {
         try {
-            const tasks = await Task.find({useremail : req.body.useremail})
+            const tasks = await Task.find({ useremail: req.body.useremail })
             res.json(tasks)
         } catch (err) {
             return res.status(500).json({ msg: err.message })
+        }
+    },
+
+    getTaskById: async (req, res) => {
+        try {
+            const taskId = req.params.id; // URL'den kartın MongoDB ID'sini alın
+
+            const task = await Task.findById(taskId); // MongoDB'den kart verilerini alın
+
+            if (!task) {
+                // Eğer kart yoksa hata döndürün
+                return res.status(404).json({ msg: "Kart bulunamadı" });
+            }
+
+            res.json(task); // Kart verilerini JSON formatında sunun
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
         }
     },
     createTask: async (req, res) => {

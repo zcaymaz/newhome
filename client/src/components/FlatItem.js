@@ -26,7 +26,7 @@ const FlatItem = (props) => {
     return (
         <div className="text-center col-lg-4 col-12 col-md-6 ">
             <div className="item">
-                <CardActionArea>
+                <CardActionArea href='/flatdetail' onClick={props.onClick}>
                     <div className="item-image">
                         <img className="img-fluid" src="/img/product1.jpeg" alt="flat" />
                     </div>

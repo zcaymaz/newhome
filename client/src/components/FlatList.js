@@ -3,12 +3,12 @@ import Title from "./Title";
 import FlatItem from "./FlatItem";
 import axios from 'axios';
 
-const FlatList = () => {
+const FlatList = (props) => {
   const [flats, setFlats] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/task/`, {
-      params: { useremail: localStorage.getItem('email'), name: localStorage.getItem('name') }
+      params: { useremail: localStorage.getItem('email'), name: localStorage.getItem('name'), ObjectId: localStorage.getItem('flatId') }
     })
       .then((res) => {
         const data = res.data.map((flat) => ({
@@ -36,6 +36,7 @@ const FlatList = () => {
         <div className="row">
           {flats.map((flat) => (
             <FlatItem
+              onClick={() => localStorage.setItem('flatId', flat._id)}
               name={flat.name}
               title={flat.title}
               price={flat.price}
