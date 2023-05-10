@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom"
+import React from 'react';
 import { Home, Chair, SelectAll, Store } from '@mui/icons-material';
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, CardActionArea } from "@mui/material";
 
-const BestFlatItem = ({ flatState, flatMoney }) => {
+const BestFlatItem = ({ flatSaletype, flatPrice, flatonClick, flatSrc, flatDescription, flatTitle, flatName, flatType, flatRoomnumber, flatSquaremeters }) => {
     const isAdmin = localStorage.getItem('role') === '1' ? true : false
     const adminRouter = () => {
         return (
@@ -12,36 +12,50 @@ const BestFlatItem = ({ flatState, flatMoney }) => {
             </Stack>
         )
     }
+    function formatCurrency(price) {
+        const amount = price || 0
+        const formattedAmount = amount.toLocaleString('tr-TR', {
+            style: 'currency',
+            currency: 'TRY',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+        const tlIndex = formattedAmount.indexOf('₺');
+        const formattedAmountWithSymbolAtEnd = formattedAmount.slice(0, tlIndex) + formattedAmount.slice(tlIndex + 1) + ' ₺';
+        return formattedAmountWithSymbolAtEnd;
+    }
     return (
         <div className="best-estate">
             <div className="best-estate-item">
-                <div className="best-estate-img-area">
-                    <img className="best-estate-img" src="/img/product1.jpeg" alt="flat" />
-                    <div className={`best-estate-state ${flatState === "Kiralık" ? "bg-green" : "bg-red"}`}>{flatState}</div>
-                </div>
-                <div className="best-estate-content">
-                    <h4><Link to="/">İlan Başlığı</Link></h4>
-                    <span><Link to="/">İlan Açıklaması</Link></span>
-                </div>
-                <div className="best-estate-features2">
-                    <div>
-                        <Store fontSize="medium" /><span> Günal Emlak </span>
+                <CardActionArea href='/flatdetail' onClick={flatonClick}>
+                    <div className="best-estate-img-area">
+                        <img className="best-estate-img" src={flatSrc} alt="flat" />
+                        <div className={`best-estate-state ${flatSaletype === "Kiralık" ? "bg-green" : "bg-red"}`}>{flatSaletype}</div>
                     </div>
-                </div>
-                <div className="best-estate-features">
-                    <div className="item-icon d-flex alig-items-center justify-content-between">
-                        <div className="best-estate-row">
-                            <Home fontSize="small" /><span>Daire</span>
-                        </div>
-                        <div className="best-estate-row">
-                            <Chair fontSize="small" /><span> 3+1 </span>
-                        </div>
-                        <div className="best-estate-row">
-                            <SelectAll fontSize="small" /><span> 120m2 </span>
+                    <div className="best-estate-content">
+                        <h4>{flatTitle}</h4>
+                        <span>{flatDescription}</span>
+                    </div>
+                    <div className="best-estate-features2">
+                        <div>
+                            <Store fontSize="medium" /><span>{flatName}</span>
                         </div>
                     </div>
-                    <h5 className="best-estate-price">{flatMoney}</h5>
-                </div>
+                    <div className="best-estate-features">
+                        <div className="item-icon d-flex alig-items-center justify-content-between">
+                            <div className="best-estate-row">
+                                <Home fontSize="small" /><span>{flatType}</span>
+                            </div>
+                            <div className="best-estate-row">
+                                <Chair fontSize="small" /><span>{flatRoomnumber}</span>
+                            </div>
+                            <div className="best-estate-row">
+                                <SelectAll fontSize="small" /><span>{flatSquaremeters}</span>
+                            </div>
+                        </div>
+                        <h5 className="best-estate-price">{formatCurrency(flatPrice)}</h5>
+                    </div>
+                </CardActionArea>
                 {isAdmin ? adminRouter() : null}
             </div>
         </div>

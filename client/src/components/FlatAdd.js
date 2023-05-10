@@ -8,12 +8,8 @@ import axios from 'axios'
 import ImageUploader from './ImageUpload'
 import { MultilineFormInput } from './common/Inputs'
 
-const onFilesUpload = (files) => {
-    window.console.log(files)
-}
 const FlatAdd = () => {
     const state = useContext(GlobalState)
-    const [tasks] = state.tasksAPI.tasks
 
     const [id, setID] = useState('')
     const [title, setTitle] = useState('')
@@ -62,34 +58,6 @@ const FlatAdd = () => {
             alert(err.response.data.msg)
         }
     }
-
-    const editTask = async (id, title, address, price, description, type, images, roomnumber, saletype, squaremeters, features) => {
-        setID(id)
-        setTitle(title)
-        setAddress(address)
-        setPrice(price)
-        setDesc(description)
-        setType(type)
-        setImages(images)
-        setRoomNumber(roomnumber)
-        setSaleType(roomnumber)
-        setSquareMeters(squaremeters)
-        setFeatures(features)
-        setOnEdit(true)
-    }
-
-    const deleteTask = async _id => {
-        try {
-            const res = await axios.delete(`/api/task/${_id}`, {
-                headers: { Authorization: token }
-            })
-            alert(res.data.msg)
-            setCallback(!callback)
-        } catch (err) {
-            alert(err.response.data.msg)
-        }
-    }
-
     return (
         <Container maxWidth="lg" className='flattAddContainer'>
             <Grid container padding={2} direction='row' sx={{ height: '100vh' }}>
