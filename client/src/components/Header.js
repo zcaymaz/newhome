@@ -22,7 +22,7 @@ const Header = () => {
                 <li className="nav-item"><Link className="nav-link" to="/market">İlanlar</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/blog">Projeler</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/dashboard">Kontrol Paneli</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/" onClick={logoutUser}>Çıkış Yap</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/" onClick={logoutUser}>Çıkış Yap (ADMİN)</Link></li>
             </>
         )
     }
