@@ -5,7 +5,6 @@ import Title from './Title'
 import axios from 'axios'
 import logo from './logo.png'
 import { FormInput, MultilineFormInput } from './common/Inputs'
-import { Add } from '@mui/icons-material'
 
 const MyProfile = () => {
     const [myAds, setMyAds] = useState([])
