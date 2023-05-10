@@ -34,7 +34,7 @@ const BestFlatItem = ({ flatSaletype, flatPrice, flatonClick, flatSrc, flatDescr
                     </div>
                     <div className="best-estate-content">
                         <h4>{flatTitle}</h4>
-                        <span>{flatDescription}</span>
+                        <span className='best-estate-description'>{flatDescription}</span>
                     </div>
                     <div className="best-estate-features2">
                         <div>
@@ -42,18 +42,20 @@ const BestFlatItem = ({ flatSaletype, flatPrice, flatonClick, flatSrc, flatDescr
                         </div>
                     </div>
                     <div className="best-estate-features">
-                        <div className="item-icon d-flex alig-items-center justify-content-between">
+                        <div className="item-icon d-flex align-items-center justify-content-between">
                             <div className="best-estate-row">
-                                <Home fontSize="small" /><span>{flatType}</span>
+                                <Home fontSize="medium" /><span>{flatType}</span>
                             </div>
                             <div className="best-estate-row">
-                                <Chair fontSize="small" /><span>{flatRoomnumber}</span>
+                                <Chair fontSize="medium" /><span>{flatRoomnumber}</span>
                             </div>
                             <div className="best-estate-row">
-                                <SelectAll fontSize="small" /><span>{flatSquaremeters}</span>
+                                <SelectAll fontSize="medium" /><span>{flatSquaremeters}</span>
                             </div>
                         </div>
-                        <h5 className="best-estate-price">{formatCurrency(flatPrice)}</h5>
+                    </div>
+                    <div className="best-estate-price">
+                        <h5>{formatCurrency(flatPrice)}</h5>
                     </div>
                 </CardActionArea>
                 {isAdmin ? adminRouter() : null}

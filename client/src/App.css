@@ -409,17 +409,13 @@ img {
   border-radius: 10px;
   background: #f7f9fc;
   overflow: hidden;
-  min-height: 393px;
+  min-height: 450px;
 }
 .best-estate-item h4{
   margin: 0;
   font-size: 16px;
   color: #364465;
   font-weight: bold;
-}
-.best-estate-content a{
-  color: inherit;
-  text-decoration: none;
 }
 .best-estate-row {
   padding-right: 7px;
@@ -428,6 +424,8 @@ img {
   padding: 10px;
   border-radius: 10px;
   width: 100%;
+  min-height: 250px;
+  max-height: 250px;
   transition: 0.5s linear;
   cursor: pointer;
 }
@@ -439,14 +437,24 @@ img {
   color: #364465;
 }
 .best-estate-content{
-  padding: 15px;
+  padding: 16px;
   border-bottom: 1px solid #ececec;
   background: white;
+  overflow: hidden;
+  max-height: 140px;
+  min-height: 140px;
+}
+.best-estate-content h4 {
+  font-size: large;
+  color: inherit;
 }
 .best-estate-features{
-  display: flex;
   justify-content: space-between;
-  padding: 15px;
+  align-items: center;
+  padding: 10px;
+}
+.best-estate-features span{
+  font-size: 16px;
 }
 .best-estate-features2{
   display: flex;
@@ -460,11 +468,10 @@ img {
 .best-estate-feature span{
   margin-left: 5px;
 }
-.best-estate-features .best-estate-price{
-  font-size: 22px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
+.best-estate-price{
+  color: inherit;
+  float: right;
+  font-size: 14px;
 }
 .section-best-estate{
   background: #82858c1a;
