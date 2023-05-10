@@ -983,3 +983,9 @@ img {
   width: 100%;
   height: 400px;
 }
+
+.dashboard-navbar {
+  font-size: 25px;
+  background-color: #dfdfdf47;
+  height: 100vh;
+}

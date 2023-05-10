@@ -1,87 +1,105 @@
-import React from 'react'
-import { Card, Grid, Accordion, AccordionDetails, AccordionSummary, Typography, } from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React, { useEffect, useState} from 'react'
+import { Box, Tabs, Tab, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import FlatItem from "./FlatItem";
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`,
+    };
+}
 
 const DashBoard = () => {
-    const [expanded, setExpanded] = React.useState(false);
+    const [value, setValue] = React.useState(0);
+    const [flat, setFlat] = useState([]);
 
-    const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
     };
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/task/`)
+            .then((res) => {
+                setFlat(res.data);
+            })
+            .catch((error) => { console.error(error); });
+    }, []);
     return (
         <>
-            <Grid container direction="row" spacing={3} p={3}>
-                <Grid item xs={4} spacing={2}>
-                    <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1bh-content"
-                            id="panel1bh-header">
-                            <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                                İlanları Düzenle
-                            </Typography>
-                            <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-                                Aliquam eget maximus est, id dignissim quam.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2bh-content"
-                            id="panel2bh-header">
-                            <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
-                            <Typography sx={{ color: 'text.secondary' }}>
-                                Projeleri Düzenle
-                            </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
-                                varius pulvinar diam eros in elit. Pellentesque convallis laoreet
-                                laoreet.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel3bh-content"
-                            id="panel3bh-header">
-                            <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                                Kullanıcı Düzenle
-                            </Typography>
-                            <Typography sx={{ color: 'text.secondary' }}>
-                                Filtering has been entirely disabled for whole web server
-                            </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                                amet egestas eros, vitae egestas augue. Duis vel est augue.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel4bh-content"
-                            id="panel4bh-header">
-                            <Typography sx={{ width: '33%', flexShrink: 0 }}>Personal data</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                                amet egestas eros, vitae egestas augue. Duis vel est augue.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                </Grid>
-            </Grid>
+            <Box
+                sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh', border: 2, borderColor: 'divider', fontSize: '35px' }}
+            >
+                <Tabs
+                    orientation="vertical"
+                    variant="scrollable"
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Vertical tabs example"
+                    sx={{ borderRight: 1, borderColor: 'divider' }}
+                >
+                    <Tab label="Kullanıcı İşlemleri" {...a11yProps(0)} />
+                    <Tab label="İlan İşlemleri" {...a11yProps(1)} />
+                    <Tab label="Yetki İşlemleri" {...a11yProps(2)} />
+                    <Tab label="Proje İşlemleri" {...a11yProps(2)} />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                    Kullanıcı İşlemleri
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <section className="section-all-re">
+                        <div className="container">
+                            <div className="row">
+                                {flat.map((flat) => (
+                                    <FlatItem
+                                        src={flat.images && flat.images.length > 0 ? flat.images[0] : flat.image}
+                                        onClick={() => localStorage.setItem('flatId', flat._id)}
+                                        name={flat.name}
+                                        title={flat.title}
+                                        price={flat.price}
+                                        type={flat.type}
+                                        roomnumber={flat.roomnumber}
+                                        squaremeters={flat.squaremeters}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    Yetki İşlemleri
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    Proje İşlemleri
+                </TabPanel>
+            </Box>
         </>
     )
 }
