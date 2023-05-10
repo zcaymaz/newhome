@@ -44,10 +44,10 @@ const userCtrl = {
             const {email, password} = req.body;
 
             const user = await Users.findOne({email})
-            if(!user) return res.status(400).json({msg: "User does not exist."})
+            if(!user) return res.status(400).json({msg: "Kullanıcı Bulunamadı."})
 
             const isMatch = await bcrypt.compare(password, user.password)
-            if(!isMatch) return res.status(400).json({msg: "Incorrect password."})
+            if(!isMatch) return res.status(400).json({msg: "Şifre yanlış."})
 
             // If login success , create access token and refresh token
             const accesstoken = createAccessToken({id: user._id})
