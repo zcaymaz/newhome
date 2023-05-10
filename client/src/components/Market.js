@@ -9,22 +9,12 @@ const Market = () => {
     const [search, setSearch] = useState();
     const [find, setFind] = useState([]);
     const [word, setWord] = useState("");
-    const [flats, setFlats] = useState([]);
+    const [flat, setFlat] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/task/`, {
-            params: { useremail: localStorage.getItem('email'), name: localStorage.getItem('name') }
-        })
+        axios.get(`http://localhost:3001/api/task/`)
             .then((res) => {
-                const data = res.data.map((flat) => ({
-                    ...flat,
-                    images: flat.images.map((image) => {
-                        const img = new Image();
-                        img.src = `data:image/jpeg;base64,${image}`;
-                        return { original: img.src, thumbnail: img.src };
-                    })
-                }));
-                setFlats(data);
+                setFlat(res.data);
             })
             .catch((error) => { console.error(error); });
     }, []);
@@ -51,8 +41,6 @@ const Market = () => {
             </div>
         }
     }
-
-
     return (
         <>
             <section className="about">
@@ -93,8 +81,9 @@ const Market = () => {
                 <section className="section-all-re">
                     <div className="container">
                         <div className="row">
-                            {flats.map((flat) => (
+                            {flat.map((flat) => (
                                 <FlatItem
+                                    src={flat.images && flat.images.length > 0 ? flat.images[0] : flat.image}
                                     name={flat.name}
                                     title={flat.title}
                                     price={flat.price}

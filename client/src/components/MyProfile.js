@@ -56,6 +56,7 @@ const MyProfile = () => {
                                             roomnumber={ad.roomnumber}
                                             squaremeters={ad.squaremeters}
                                             onClick={() => localStorage.setItem('flatId', ad._id)}
+                                            src={ad.images && ad.images.length > 0 ? ad.images[0] : ad.image}
                                         />
                                     </>
                                 ))}

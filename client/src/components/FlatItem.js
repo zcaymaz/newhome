@@ -28,7 +28,7 @@ const FlatItem = (props) => {
             <div className="item">
                 <CardActionArea href='/flatdetail' onClick={props.onClick}>
                     <div className="item-image">
-                        <img className="img-fluid" src="/img/product1.jpeg" alt="flat" />
+                        <img className="img-fluid" src={props.src} alt="flat" />
                     </div>
                     <div className="item-description">
                         <div className="d-flex justify-content-between mb-3">
