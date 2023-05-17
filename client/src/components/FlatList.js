@@ -3,7 +3,7 @@ import Title from "./Title";
 import FlatItem from "./FlatItem";
 import axios from 'axios';
 
-const FlatList = (props) => {
+const FlatList = () => {
   const [flat, setFlat] = useState([]);
 
   useEffect(() => {
@@ -26,8 +26,9 @@ const FlatList = (props) => {
         <div className="row">
           {flat.map((flat) => (
             <FlatItem
+              key={flat._id}
+              flatId={flat._id}
               src={flat.images && flat.images.length > 0 ? flat.images[0] : flat.image}
-              onClick={() => localStorage.setItem('flatId', flat._id)}
               name={flat.name}
               title={flat.title}
               price={flat.price}

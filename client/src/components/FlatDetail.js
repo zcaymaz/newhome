@@ -1,17 +1,18 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from "react";
 import ImageGallery from 'react-image-gallery';
 import { Store } from "@mui/icons-material";
 import axios from 'axios';
+import { formatCurrency } from "./common/FormatCurrency";
 
-const FlatDetail = () => {
+const FlatDetail = ({match}) => {
+    const flatId = match.params.id;
     const [flat, setFlat] = useState({});
     const [flatImages, setFlatImages] = useState([]);
     const [flatFeatures, setFlatFeatures] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/task/${localStorage.getItem('flatId')}`, {
-            params: { ObjectId: localStorage.getItem('flatId') }
-        })
+        axios.get(`http://localhost:3001/api/task/${flatId}`)
             .then((res) => {
                 console.log(res);
                 setFlat(res.data);
@@ -23,20 +24,7 @@ const FlatDetail = () => {
                 setFlatFeatures(res.data.features);
             })
             .catch((error) => { console.error(error); });
-    }, []);
-
-    function formatCurrency(price) {
-        const amount = price || 0
-        const formattedAmount = amount.toLocaleString('tr-TR', {
-            style: 'currency',
-            currency: 'TRY',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        });
-        const tlIndex = formattedAmount.indexOf('₺');
-        const formattedAmountWithSymbolAtEnd = formattedAmount.slice(0, tlIndex) + formattedAmount.slice(tlIndex + 1) + ' ₺';
-        return formattedAmountWithSymbolAtEnd;
-    }
+    }, [flatId]);
 
     return (
         <div className="flat-detail">

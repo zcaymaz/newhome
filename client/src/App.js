@@ -29,7 +29,7 @@ function App() {
           <Route path="/myprofile" component={MyProfile}></Route>
           <Route path="/blog" exact component={Blog}></Route>
           <Route path="/blog/:id" component={BlogDetail}></Route>
-          <Route path="/flatdetail" component={FlatDetail}></Route>
+          <Route path="/flatdetail/:id" component={FlatDetail}></Route>
           <Route path="/flatadd" component={FlatAdd}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>

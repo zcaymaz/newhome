@@ -55,6 +55,8 @@ const BestFlatList = () => {
                         <Slider {...settings}>
                             {flat.map((flat) => (
                                 <BestFlatItem
+                                    key={flat._id}
+                                    flatId={flat._id}
                                     flatSrc={flat.images && flat.images.length > 0 ? flat.images[0] : flat.image}
                                     flatName={flat.name}
                                     flatTitle={flat.title}
@@ -64,7 +66,6 @@ const BestFlatList = () => {
                                     flatType={flat.type}
                                     flatRoomnumber={flat.roomnumber}
                                     flatSquaremeters={flat.squaremeters}
-                                    flatonClick={() => localStorage.setItem('flatId', flat._id)}
                                 />
                             ))}
                         </Slider>
