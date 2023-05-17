@@ -1,10 +1,29 @@
-import { TextField } from '@mui/material'
+import { TextField, Input } from '@mui/material'
 import React from 'react'
 
 export const FormInput = (props) => {
     return (
         <>
             <TextField
+                className='FormInput'
+                size={props.size || 'small'}
+                label={props.label}
+                name={props.name}
+                type={props.type}
+                placeholder={props.placeholder}
+                text={props.text}
+                value={props.value}
+                onChange={props.onChange}
+                disabled={props.disabled}
+            />
+        </>
+    )
+}
+
+export const DateInput = (props) => {
+    return (
+        <>
+            <Input
                 className='FormInput'
                 size={props.size || 'small'}
                 label={props.label}

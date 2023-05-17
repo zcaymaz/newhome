@@ -53,7 +53,7 @@ const TaskCtrl = {
             await Task.findByIdAndDelete(req.params.id)
             res.json({ msg: "Task Silindi." })
         } catch (err) {
-            return res.status(500).json({ msg: 'ksadkalsmdklasd' })
+            return res.status(500).json({ msg: 'Silinemedi.' })
         }
     },
     updateTask: async (req, res) => {

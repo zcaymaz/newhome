@@ -13,6 +13,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import { DataProvider, GlobalState } from './GlobalState';
 import MyProfile from './components/MyProfile';
+import ProjectAdd from './components/ProjectAdd';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/blog/:id" component={BlogDetail}></Route>
           <Route path="/flatdetail/:id" component={FlatDetail}></Route>
           <Route path="/flatadd" component={FlatAdd}></Route>
+          <Route path="/projectadd" component={ProjectAdd}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
         </div>
