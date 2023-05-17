@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ImageGallery from 'react-image-gallery';
 import { Store } from "@mui/icons-material";
 import axios from 'axios';
-import { formatCurrency } from "./common/FormatCurrency";
+import { formatCurrency } from "../common/FormatCurrency";
 
 const FlatDetail = ({match}) => {
     const flatId = match.params.id;

@@ -1,23 +1,22 @@
-import React, { useContext } from 'react'
-import './App.css';
-import FlatDetail from "./components/FlatDetail"
-import Header from "./components/Header"
-import Home from "./components/Home"
-import Market from "./components/Market"
-import DashBoard from "./components/DashBoard"
-import Blog from "./components/Blog"
-import BlogDetail from "./components/BlogDetail"
-import FlatAdd from './components/FlatAdd';
+import React from 'react'
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Login from './components/Login';
-import Register from './components/Register';
-import { DataProvider, GlobalState } from './GlobalState';
-import MyProfile from './components/MyProfile';
-import ProjectAdd from './components/ProjectAdd';
+import './App.css';
+import { DataProvider } from './GlobalState';
+import FlatDetail from "./components/pages/FlatDetail"
+import Header from "./components/Header"
+import Home from "./components/pages/Home"
+import Market from "./components/pages/Market"
+import DashBoard from "./components/pages/DashBoard"
+import Blog from "./components/pages/Blog"
+import BlogDetail from "./components/pages/BlogDetail"
+import FlatAdd from './components/pages/FlatAdd';
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
+import MyProfile from './components/pages/MyProfile';
+import ProjectAdd from './components/pages/ProjectAdd';
 
 
 function App() {
-  const state = useContext(GlobalState)
   
   return (
     <DataProvider>
@@ -29,7 +28,7 @@ function App() {
           <Route path="/dashboard" component={DashBoard}></Route>
           <Route path="/myprofile" component={MyProfile}></Route>
           <Route path="/blog" exact component={Blog}></Route>
-          <Route path="/blog/:id" component={BlogDetail}></Route>
+          <Route path="/blog/detail/:id" component={BlogDetail}></Route>
           <Route path="/flatdetail/:id" component={FlatDetail}></Route>
           <Route path="/flatadd" component={FlatAdd}></Route>
           <Route path="/projectadd" component={ProjectAdd}></Route>

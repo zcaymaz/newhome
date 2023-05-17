@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Slider from "react-slick";
-import Title from "./Title"
-import BestFlatItem from "./BestFlatItem"
+import Title from "../common/Title"
+import BestFlatItem from "../BestFlatItem"
 import axios from 'axios'
 
 const BestFlatList = () => {

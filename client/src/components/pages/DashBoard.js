@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import { Box, Tabs, Tab, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import FlatItem from "./FlatItem";
+import FlatItem from "../FlatItem";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;

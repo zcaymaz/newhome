@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import Logo from "./logofooter.png"
+import Logo from "./images/logofooter.png"
 
 const Footer = () => {
     const isLogged = localStorage.getItem('role') ? true : false

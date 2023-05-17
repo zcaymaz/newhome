@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Title from "./Title";
-import FlatItem from "./FlatItem";
+import Title from "../common/Title";
+import FlatItem from "../FlatItem";
 import axios from 'axios';
 
 const FlatList = () => {

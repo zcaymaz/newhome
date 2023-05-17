@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Grid, InputLabel, Typography } from '@mui/material'
-import FlatItem from './FlatItem'
-import Title from './Title'
+import FlatItem from '../FlatItem'
+import Title from '../common/Title'
 import axios from 'axios'
-import logo from './logo.png'
-import { FormInput, MultilineFormInput } from './common/Inputs'
+import logo from '../images/logo.png'
+import { FormInput, MultilineFormInput } from '../common/Inputs'
 
 const MyProfile = () => {
     const [myAds, setMyAds] = useState([])

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import FlatItem from "./FlatItem"
-import Combobox from "./common/Combobox"
-import Footer from "./Footer";
+import FlatItem from "../FlatItem"
+import Combobox from "../common/Combobox"
+import Footer from "../Footer";
 import axios from 'axios'
 
 const Market = () => {

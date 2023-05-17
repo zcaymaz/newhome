@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from "react-router-dom"
-import Logo from "./logonavbar.png"
+import Logo from "./images/logonavbar.png"
 
 const Header = () => {
     const isLogged = localStorage.getItem('role') ? true : false

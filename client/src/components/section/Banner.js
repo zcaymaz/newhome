@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import banner from "../banner.jpg";
+import banner from "../images/banner.jpg";
 import { Link } from "react-router-dom";
 
 const Banner = () => {

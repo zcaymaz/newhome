@@ -1,17 +1,16 @@
 import React, { useState, useContext } from 'react'
 import { Grid, Stack, Typography, Button, Container } from '@mui/material'
-import { FormInput } from './common/Inputs'
-import { SelectResidence, SelectRoomCount, SelectSaleType } from './common/SelectComp'
-import AutoComp from './common/AutoComp'
-import { GlobalState } from '../GlobalState'
 import axios from 'axios'
-import ImageUploader from './ImageUpload'
-import { MultilineFormInput } from './common/Inputs'
+import { FormInput, MultilineFormInput } from '../common/Inputs'
+import { SelectResidence, SelectRoomCount, SelectSaleType } from '../common/SelectComp'
+import AutoComp from '../common/AutoComp'
+import { GlobalState } from '../../GlobalState'
+import ImageUploader from '../common/ImageUpload'
 
 const FlatAdd = () => {
     const state = useContext(GlobalState)
 
-    const [id, setID] = useState('')
+    const [id] = useState('')
     const [title, setTitle] = useState('')
     const [address, setAddress] = useState('')
     const [price, setPrice] = useState('')

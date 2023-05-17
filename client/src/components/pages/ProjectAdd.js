@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { Grid, Stack, Typography, Button, Container } from '@mui/material'
-import { FormInput } from './common/Inputs'
-import AutoComp from './common/AutoComp'
+import { FormInput, MultilineFormInput } from '../common/Inputs'
+import AutoComp from '../common/AutoComp'
 import axios from 'axios'
-import ImageUploader from './ImageUpload'
-import { MultilineFormInput } from './common/Inputs'
+import ImageUploader from '../common/ImageUpload'
 
 const ProjectAdd = () => {
     const [title, setTitle] = useState('')

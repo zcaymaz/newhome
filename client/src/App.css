@@ -378,24 +378,6 @@ img {
 .footer-info-item{
   width: 25px;
 }
-.subscribe-area{
-  background-color: white;
-  padding: 5px 10px;
-  box-shadow: 0 10px 12px rgba(77,60,160,0.1);
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -o-border-radius: 8px;
-}
-
-.btn-subscribe{
-  background: #009688;
-  border-radius: .2rem;
-  border: 0;
-  color: white;
-  padding: 12px 25px;
-}
 
 /* section {
   /*padding-top: 80px;
@@ -504,12 +486,6 @@ img {
     border-radius: 5px;
 }
 
-.section-subscribe{
-      background: #4b5698;
-}
-.section-subscribe .title{
-  color: white;
-}
 .sbs-description{
   color: #e6e6e6;
 }
