@@ -3,6 +3,7 @@ import FlatList from "../section/FlatList"
 import Banner from "../section/Banner"
 import BestFlatList from "../section/BestFlatList"
 import Footer from "../Footer"
+import BlogList from "../section/BlogList"
 
 const Home = () => {
     return (
@@ -10,6 +11,7 @@ const Home = () => {
             <Banner />
             <FlatList />
             <BestFlatList />
+            <BlogList />
             <Footer />
         </React.Fragment>
     )

@@ -28,7 +28,7 @@ function App() {
           <Route path="/dashboard" component={DashBoard}></Route>
           <Route path="/myprofile" component={MyProfile}></Route>
           <Route path="/blog" exact component={Blog}></Route>
-          <Route path="/blog/detail/:id" component={BlogDetail}></Route>
+          <Route path="/blogdetail/:id" component={BlogDetail}></Route>
           <Route path="/flatdetail/:id" component={FlatDetail}></Route>
           <Route path="/flatadd" component={FlatAdd}></Route>
           <Route path="/projectadd" component={ProjectAdd}></Route>

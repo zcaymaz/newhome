@@ -1,38 +1,55 @@
-import BlogItem from "../BlogItem"
-import Footer from "../Footer"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import BlogItem from "../BlogItem";
+import Footer from "../Footer";
 
 const Blog = () => {
-    return (
-        <>
-            <section className="blog">
-                <div className="page-top">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <h1 className="page-title">Projeler</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="page-content">
-                    <div className="container">
-                        <div className="row">
-                            <BlogItem link="detail/1" title="Proje Başlığı" />
-                            <BlogItem link="detail/2" title="Proje Başlığı" />
-                            <BlogItem link="detail/3" title="Proje Başlığı" />
-                            <BlogItem link="detail/4" title="Proje Başlığı" />
-                            <BlogItem link="detail/5" title="Proje Başlığı" />
-                            <BlogItem link="detail/6" title="Proje Başlığı" />
-                            <BlogItem link="detail/7" title="Proje Başlığı" />
-                            <BlogItem link="detail/8" title="Proje Başlığı" />
-                            <BlogItem link="detail/9" title="Proje Başlığı" />
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <Footer />
-        </>
-    )
-}
+  const [project, setProjects] = useState([]);
 
-export default Blog
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/project/`).then((res) => {
+        const reversedProject = res.data.reverse();
+        setProjects(reversedProject);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  return (
+    <>
+      <section className="blog">
+        <div className="page-top">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <h1 className="page-title">Projeler</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="page-content">
+          <div className="container">
+            <div className="row">
+              {project.map((project) => (
+                <BlogItem
+                key={project._id}
+                ProjectId={project._id}
+                src={project.images && project.images.length > 0 ? project.images[0] : project.image}
+                title={project.title}
+                description={project.description}
+                finishDate={project.finishDate}
+                housingnumber={project.housingnumber}
+                name={project.name}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      <Footer />
+    </>
+  );
+};
+
+export default Blog;

@@ -34,6 +34,7 @@ const Header = () => {
                 <li className="nav-item"><Link className="nav-link" to="/market">İlanlar</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/blog">Projeler</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/flatadd">İlan Ekle</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/projectadd">Proje Ekle</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/myprofile">Profilim</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/" onClick={logoutUser}>Çıkış Yap</Link></li>
             </>

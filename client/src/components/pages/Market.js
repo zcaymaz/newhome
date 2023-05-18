@@ -14,7 +14,8 @@ const Market = () => {
     useEffect(() => {
         axios.get(`http://localhost:3001/api/task/`)
             .then((res) => {
-                setFlat(res.data);
+                const reversedFlat = res.data.reverse();
+                setFlat(reversedFlat);
             })
             .catch((error) => { console.error(error); });
     }, []);
