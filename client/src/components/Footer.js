@@ -18,6 +18,7 @@ const Footer = () => {
         return (
             <>
                 <li><a href="/flatadd" className="footerMenu">İlan Ekle</a></li>
+                <li><a href="/projectadd" className="footerMenu">Proje Ekle</a></li>
                 <li><a href="/myprofile" className="footerMenu">Profilim</a></li>
             </>
         )
@@ -44,7 +45,7 @@ const Footer = () => {
                         </Link>
                         <span className="footer-other-text d-block mt-3 mb-3">
                             EmlakBankası sitesinde kullanıcılar tarafından sağlanan
-                            her türlü ilan, bilgi, içerik ve görselingerçekliği, orijinalliği, güvenilirliği
+                            her türlü ilan, bilgi, içerik ve görselin gerçekliği, orijinalliği, güvenilirliği
                             ve doğruluğuna ilişkin sorumluluk bu içerikleri giren kullanıcıya ait olup,
                             emlakbankası.com'un bu hususlarla ilgili herhangi bir sorumluluğu bulunmamaktadır.</span>
                         <div className="footer-social">

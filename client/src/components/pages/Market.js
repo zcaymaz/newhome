@@ -84,6 +84,8 @@ const Market = () => {
                         <div className="row">
                             {flat.map((flat) => (
                                 <FlatItem
+                                    key={flat._id}
+                                    flatId={flat._id}
                                     src={flat.images && flat.images.length > 0 ? flat.images[0] : flat.image}
                                     name={flat.name}
                                     title={flat.title}
