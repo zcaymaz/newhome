@@ -14,6 +14,7 @@ import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import MyProfile from './components/pages/MyProfile';
 import ProjectAdd from './components/pages/ProjectAdd';
+import Test from './components/pages/Test';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/projectadd" component={ProjectAdd}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
+          <Route path="/test" component={Test}></Route>
         </div>
       </Router>
     </DataProvider>

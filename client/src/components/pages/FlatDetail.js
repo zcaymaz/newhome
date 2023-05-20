@@ -10,6 +10,7 @@ const FlatDetail = ({match}) => {
     const [flat, setFlat] = useState({});
     const [flatImages, setFlatImages] = useState([]);
     const [flatFeatures, setFlatFeatures] = useState([]);
+    const [flatLocation, setflatLocation] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/api/task/${flatId}`)
@@ -22,6 +23,7 @@ const FlatDetail = ({match}) => {
                     }])
                 });
                 setFlatFeatures(res.data.features);
+                setflatLocation(res.data.location);
             })
             .catch((error) => { console.error(error); });
     }, [flatId]);
@@ -43,10 +45,12 @@ const FlatDetail = ({match}) => {
                         <div className="fd-top flat-detail-content">
                             <div>
                                 <h3 className="flat-detail-title">{flat.title}</h3>
-                                <p className="fd-address">
-                                    <i className="fas fa-map-marker-alt" />
-                                    {flat.address}
-                                </p>
+                                {flatLocation.map((location, index) => (
+                                    <p className="fd-address" key={index}>
+                                        <i className="fas fa-map-marker-alt" />
+                                        {location.province}/{location.district}
+                                    </p>
+                                ))}
                             </div>
                             <div>
                                 <span className="fd-price">{formatCurrency(flat.price)}</span>

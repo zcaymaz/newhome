@@ -14,9 +14,8 @@ const taskSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    address:{
-        type: String,
-        required: true
+    location:{
+        type: Array,
     },
     price:{
         type: Number,

@@ -6,13 +6,16 @@ import { SelectResidence, SelectRoomCount, SelectSaleType } from '../common/Sele
 import AutoComp from '../common/AutoComp'
 import { GlobalState } from '../../GlobalState'
 import ImageUploader from '../common/ImageUpload'
+import CityComboBox from '../common/Combobox'
 
 const FlatAdd = () => {
     const state = useContext(GlobalState)
+    const [selectedProvince, setSelectedProvince] = useState(null);
+    const [selectedDistrict, setSelectedDistrict] = useState(null);
 
     const [id] = useState('')
     const [title, setTitle] = useState('')
-    const [address, setAddress] = useState('')
+    const [location, setLocation] = useState({ province: '', district: '' });
     const [price, setPrice] = useState('')
     const [description, setDesc] = useState('')
     const [type, setType] = useState('')
@@ -25,24 +28,24 @@ const FlatAdd = () => {
     const [callback, setCallback] = state.tasksAPI.callback
     const [onEdit, setOnEdit] = useState(false)
 
-    console.log(features)
+    console.log(location)
     const createTask = async e => {
         e.preventDefault()
         try {
             if (onEdit) {
-                const res = await axios.put(`http://localhost:3001/api/task/${id}`, { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, address: address, price: price, description: description, type: type, images: images, roomnumber: roomnumber, saletype: saletype ,squaremeters: squaremeters, features: features }, {
+                const res = await axios.put(`http://localhost:3001/api/task/${id}`, { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, location: location, price: price, description: description, type: type, images: images, roomnumber: roomnumber, saletype: saletype ,squaremeters: squaremeters, features: features }, {
                     headers: { Authorization: token }
                 })
                 console.log(res.data.msg)
             } else {
-                const res = await axios.post('http://localhost:3001/api/task', { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, address: address, price: price, description: description, type: type, images: images, roomnumber: roomnumber, saletype: saletype , squaremeters: squaremeters, features: features }, {
-                    headers: { Authorization: token }
+                const res = await axios.post('http://localhost:3001/api/task', { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, location: location, price: price, description: description, type: type, images: images, roomnumber: roomnumber, saletype: saletype , squaremeters: squaremeters, features: features }, {
+                    location: `${location.province}, ${location.district}`,
                 })
                 console.log(res.data.msg)
             }
             setOnEdit(false)
             setTitle('')
-            setAddress('')
+            setLocation([])
             setPrice('')
             setDesc('')
             setType('')
@@ -57,6 +60,17 @@ const FlatAdd = () => {
             alert(err.response.data.msg)
         }
     }
+
+    const handleProvinceChange = (event, value) => {
+        setSelectedProvince(value);
+        setLocation((prevState) => ({ ...prevState, province: value ? value.name : '' }));
+      };
+    
+      const handleDistrictChange = (event, value) => {
+        setSelectedDistrict(value);
+        setLocation((prevState) => ({ ...prevState, district: value ? value.name : '' }));
+      };
+      
     return (
         <Container maxWidth="lg" className='flattAddContainer'>
             <Grid container padding={2} direction='row' sx={{ height: '100vh' }}>
@@ -68,9 +82,14 @@ const FlatAdd = () => {
                     <form onSubmit={createTask}>
                         <ImageUploader value={images} pickImages={setImages} />
                         <Stack direction="row" spacing={3} padding={1}>
-                            <FormInput label="Başlık" name="title" id="title" value={title} required onChange={e => setTitle(e.target.value)} />
-                            <FormInput label="Adres" name="address" id="address" value={address} required onChange={e => setAddress(e.target.value)} />
-                            <FormInput label="Fiyat" type="number" name="price" id="price" value={price} required onChange={e => setPrice(e.target.value)} />
+                            <FormInput size="medium" label="Başlık" name="title" id="title" value={title} required onChange={e => setTitle(e.target.value)} />
+                            <FormInput size="medium" label="Fiyat" type="number" name="price" id="price" value={price} required onChange={e => setPrice(e.target.value)} />
+                        </Stack>
+                        <Stack direction="row" spacing={3} padding={1}>
+                        <CityComboBox
+                            onProvinceChange={handleProvinceChange}
+                            onDistrictChange={handleDistrictChange}
+                        />
                         </Stack>
                         <Stack direction="row" spacing={3} padding={1}>
                             <MultilineFormInput label="Açıklama" name="description" id="description" value={description} required onChange={e => setDesc(e.target.value)} />

@@ -1,39 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import banner from "../images/banner.jpg";
-import { Link } from "react-router-dom";
 
-const Banner = () => {
-  const [search, setSearch] = useState();
-  const [find, setFind] = useState([]);
-  const [word, setWord] = useState("");
-  useEffect(() => {
-    setSearch(["a", "b", "test", "mb"]);
-  }, []);
-  const findSearch = (e) => {
-    setWord(e.target.value);
-    const filteredCountries = search.filter((item) =>
-      item.indexOf(e.target.value) > -1 ? item : null
-    );
-    e.target.value.length === 0 ? setFind([]) : setFind(filteredCountries);
+const Banner = (props) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
-  const findResult = () => {
-    if (find.length === 0 && word.length > 0) {
-      return <div className="find-search">Not Found</div>;
-    }
-    if (find.length > 0) {
-      return (
-        <div className="find-search">
-          {find.map((item) => {
-            return (
-              <Link key={item} to="#">
-                {item}
-              </Link>
-            );
-          })}
-        </div>
-      );
-    }
-  };
+
   return (
     <div
       className="banner d-flex align-items-center"
@@ -49,11 +23,11 @@ const Banner = () => {
                 </h2>
                 <div className="search-area">
                   <input
-                    value={word}
-                    onChange={(e) => findSearch(e)}
                     type="text"
-                    className="inp-search"
-                    placeholder="İl,ilçe,mahalle..."
+                    value={props.value || searchTerm}
+                    onChange={props.onChange || handleSearch}
+                    placeholder="İlan Ara"
+                    style={{width:'100%'}}
                   />
                   <button className="btn-search m-2">
                     <i
@@ -63,7 +37,6 @@ const Banner = () => {
                     Ara
                   </button>
                 </div>
-                {findResult()}
               </div>
             </div>
           </div>

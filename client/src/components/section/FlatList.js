@@ -3,7 +3,7 @@ import Title from "../common/Title";
 import FlatItem from "../FlatItem";
 import axios from 'axios';
 
-const FlatList = () => {
+const FlatList = ({searchTerm, title}) => {
   const [flat, setFlat] = useState([]);
 
   useEffect(() => {
@@ -15,17 +15,16 @@ const FlatList = () => {
       .catch((error) => { console.error(error); });
   }, []);
 
-  const title = {
-    text: "Öne Çıkan İlanlar",
-    description: ""
-  };
+  const filteredFlat = flat.filter((flat) =>
+  flat.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <section className="section-all-re">
       <div className="container">
-        <Title title={title.text} description={title.description} />
+        <Title title={title || "Öne Çıkan İlanlar"} />
         <div className="row">
-          {flat.map((flat) => (
+          {filteredFlat.map((flat) => (
             <FlatItem
               key={flat._id}
               flatId={flat._id}
