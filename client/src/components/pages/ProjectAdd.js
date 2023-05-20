@@ -60,10 +60,16 @@ const ProjectAdd = () => {
                         <Stack direction="row" spacing={3} padding={1}>
                             <MultilineFormInput label="Açıklama" name="description" id="description" value={description} required onChange={e => setDesc(e.target.value)} />
                         </Stack>
-                        <Stack direction="row" spacing={3} padding={1}>
-                            <FormInput placeholder="Başlangıç Tarihi" type="date" name="startDate" id="startDate" value={startDate} required onChange={e => setStartDate(e.target.value)} />
-                            <FormInput placeholder="Teslim Tarihi" type="date" name="finishDate" id="finishDate" value={finishDate} required onChange={e => setFinishDate(e.target.value)} />
-                        </Stack>
+                        <Grid container spacing={3} padding={1}>
+                            <Grid item xs={6} spacing={2}>
+                                <Typography>Proje Başlangıç Tarihi:</Typography>
+                                <FormInput placeholder="Başlangıç Tarihi" type="date" name="startDate" id="startDate" value={startDate} required onChange={e => setStartDate(e.target.value)} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography>Proje Bitiş Tarihi:</Typography>
+                                <FormInput placeholder="Teslim Tarihi" type="date" name="finishDate" id="finishDate" value={finishDate} required onChange={e => setFinishDate(e.target.value)} />
+                            </Grid>
+                        </Grid>
                         <Stack direction="row" spacing={3} padding={1}>
                             <AutoComp value={features} name="features" id="features" onChange={(event, newValue) => { setFeatures(newValue) }} />
                         </Stack>
