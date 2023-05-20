@@ -1,21 +1,72 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Grid, InputLabel, Typography } from '@mui/material'
+import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
+import SwipeableViews from 'react-swipeable-views';
+import { Avatar, Grid, InputLabel, Typography, AppBar, Tabs, Tab, Box } from '@mui/material'
 import FlatItem from '../FlatItem'
-import Title from '../common/Title'
+import BlogItem from '../BlogItem'
 import axios from 'axios'
 import logo from '../images/logo.png'
 import { FormInput, MultilineFormInput } from '../common/Inputs'
 
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `full-width-tab-${index}`,
+        'aria-controls': `full-width-tabpanel-${index}`,
+    };
+}
+
 const MyProfile = () => {
     const [myAds, setMyAds] = useState([])
+    const [myProject, setMyProject] = useState([])
+    const theme = useTheme();
+    const [value, setValue] = React.useState(0);
 
     useEffect(() => {
         axios.post(`http://localhost:3001/api/task/email`, { useremail: localStorage.getItem('email') }).then((res) => { setMyAds(res.data) })
     }, [])
+
+    useEffect(() => {
+        axios.post(`http://localhost:3001/api/project/email`, { useremail: localStorage.getItem('email') }).then((res) => { setMyProject(res.data) })
+    }, [])
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const handleChangeIndex = (index) => {
+        setValue(index);
+    };
     return (
         <>
-            <Grid container direction="row" justifyContent="center">
-                <Grid item xs={8} mt={3} p={5} sx={{ bgcolor: '#ffffff', borderRadius: '10px', border: '1px #f0f0f0 solid' }} >
+            <Grid container direction="row" justifyContent="center" alignItems="center">
+                <Grid item xs={10} mt={3} p={5} sx={{ bgcolor: '#ffffff', borderRadius: '10px', border: '1px #f0f0f0 solid' }} >
                     <Grid container direction="row">
                         <Grid item xs={12} md={6} p={1} justifyContent="center">
                             <center>
@@ -40,28 +91,65 @@ const MyProfile = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={10}>
-                    <section className="section-all-re">
-                        <div className="container">
-                            <Title title="İlanlarım" description="" />
-                            <hr />
-                            <div className="row">
-                                {myAds.map((ad) => (
-                                    <>
-                                        <FlatItem
-                                            name={ad.name}
-                                            title={ad.title}
-                                            price={ad.price}
-                                            type={ad.type}
-                                            roomnumber={ad.roomnumber}
-                                            squaremeters={ad.squaremeters}
-                                            onClick={() => localStorage.setItem('flatId', ad._id)}
-                                            src={ad.images && ad.images.length > 0 ? ad.images[0] : ad.image}
-                                        />
-                                    </>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+                    <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
+                        <AppBar position="static">
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                indicatorColor="secondary"
+                                textColor="inherit"
+                                variant="fullWidth"
+                                aria-label="full width tabs example"
+                            >
+                                <Tab sx={{ fontSize: '20px' }} label="İlanlar" {...a11yProps(0)} />
+                                <Tab sx={{ fontSize: '20px' }} label="Projeler" {...a11yProps(1)} />
+                            </Tabs>
+                        </AppBar>
+                        <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={value} onChangeIndex={handleChangeIndex}>
+                            <TabPanel value={value} index={0} dir={theme.direction}>
+                                <section className="section-all-re">
+                                    <div className="container">
+                                        <div className="row">
+                                            {myAds.map((ad) => (
+                                                <>
+                                                    <FlatItem
+                                                        name={ad.name}
+                                                        title={ad.title}
+                                                        price={ad.price}
+                                                        type={ad.type}
+                                                        roomnumber={ad.roomnumber}
+                                                        squaremeters={ad.squaremeters}
+                                                        onClick={() => localStorage.setItem('flatId', ad._id)}
+                                                        src={ad.images && ad.images.length > 0 ? ad.images[0] : ad.image}
+                                                    />
+                                                </>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+                            </TabPanel>
+                            <TabPanel value={value} index={1} dir={theme.direction}>
+                            <section className="section-all-re">
+                                    <div className="container">
+                                        <div className="row">
+                                        {myProject.map((project) => (
+                                            <BlogItem
+                                                key={project._id}
+                                                ProjectId={project._id}
+                                                src={project.images && project.images.length > 0 ? project.images[0] : project.image}
+                                                title={project.title}
+                                                description={project.description}
+                                                finishDate={project.finishDate}
+                                                housingnumber={project.housingnumber}
+                                                name={project.name}
+                                            />
+                                        ))}
+                                        </div>
+                                    </div>
+                                </section>
+                            </TabPanel>
+                        </SwipeableViews>
+                    </Box>
                 </Grid>
             </Grid>
         </>
