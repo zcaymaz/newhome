@@ -14,9 +14,8 @@ const projectSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    address:{
-        type: String,
-        required: true
+    location:{
+        type: Array,
     },
     startDate:{
         type: Date,

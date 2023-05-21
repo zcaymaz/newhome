@@ -36,10 +36,10 @@ const ProjectCtrl = {
     },
     createProject: async (req, res) => {
         try {
-            const { name, useremail, title, address, startDate, finishDate, description, images, housingnumber, features } = req.body;
+            const { name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features } = req.body;
 
             const newProject = new Project({
-                name, useremail, title, address, startDate, finishDate, description, images, housingnumber, features
+                name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features
             })
 
             await newProject.save()
@@ -58,10 +58,10 @@ const ProjectCtrl = {
     },
     updateProject: async (req, res) => {
         try {
-            const { name, useremail, title, address, startDate, finishDate, description, images, housingnumber, features } = req.body;
+            const { name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features } = req.body;
 
             await Project.findOneAndUpdate({ _id: req.params.id }, {
-                name, useremail, title, address, startDate, finishDate, description, images, housingnumber, features
+                name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features
             })
 
             res.json({ msg: "Project Güncellendi." })

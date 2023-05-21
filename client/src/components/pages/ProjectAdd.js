@@ -4,10 +4,14 @@ import { FormInput, MultilineFormInput } from '../common/Inputs'
 import AutoComp from '../common/AutoComp'
 import axios from 'axios'
 import ImageUploader from '../common/ImageUpload'
+import CityComboBox from '../common/Combobox'
 
 const ProjectAdd = () => {
+    const [selectedProvince, setSelectedProvince] = useState(null);
+    const [selectedDistrict, setSelectedDistrict] = useState(null);
+
     const [title, setTitle] = useState('')
-    const [address, setAddress] = useState('')
+    const [location, setLocation] = useState({ province: '', district: '' });
     const [startDate, setStartDate] = useState('')
     const [finishDate, setFinishDate] = useState('')
     const [description, setDesc] = useState('')
@@ -20,17 +24,18 @@ const ProjectAdd = () => {
         e.preventDefault()
         try {
             if (onEdit) {
-                const res = await axios.put(`http://localhost:3001/api/task/`, { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, address: address, startDate: startDate, finishDate: finishDate, description: description, images: images, housingnumber: housingnumber, features: features }, {
+                const res = await axios.put(`http://localhost:3001/api/task/`, { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, location: location, startDate: startDate, finishDate: finishDate, description: description, images: images, housingnumber: housingnumber, features: features }, {
                 })
                 console.log(res.data.msg)
             } else {
-                const res = await axios.post('http://localhost:3001/api/project', { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, address: address, startDate: startDate, finishDate: finishDate, description: description, images: images, housingnumber: housingnumber,  features: features }, {
+                const res = await axios.post('http://localhost:3001/api/project', { name: localStorage.getItem('name'), useremail: localStorage.getItem('email'), title: title, location: location, startDate: startDate, finishDate: finishDate, description: description, images: images, housingnumber: housingnumber,  features: features }, {
+                    location: `${location.province}, ${location.district}`,
                 })
                 console.log(res.data.msg)
             }
             setOnEdit(false)
             setTitle('')
-            setAddress('')
+            setLocation([])
             setStartDate('')
             setFinishDate('')
             setDesc('')
@@ -42,6 +47,17 @@ const ProjectAdd = () => {
             alert(err.response.data.msg)
         }
     }
+
+    const handleProvinceChange = (event, value) => {
+        setSelectedProvince(value);
+        setLocation((prevState) => ({ ...prevState, province: value ? value.name : '' }));
+      };
+    
+    const handleDistrictChange = (event, value) => {
+        setSelectedDistrict(value);
+        setLocation((prevState) => ({ ...prevState, district: value ? value.name : '' }));
+      };
+
     return (
         <Container maxWidth="lg" className='flattAddContainer'>
             <Grid container padding={2} direction='row' sx={{ height: '100vh' }}>
@@ -54,8 +70,13 @@ const ProjectAdd = () => {
                         <ImageUploader value={images} pickImages={setImages} />
                         <Stack direction="row" spacing={3} padding={1}>
                             <FormInput label="Başlık" name="title" id="title" value={title} required onChange={e => setTitle(e.target.value)} />
-                            <FormInput label="Adres" name="address" id="address" value={address} required onChange={e => setAddress(e.target.value)} />
                             <FormInput label="Daire Sayısı" type="number" name="housingnumber" id="housingnumber" value={housingnumber} required onChange={(e) => {if (e.target.value.length <= 5) {setHousingNumber(e.target.value);}}}/>
+                        </Stack>
+                        <Stack direction="row" spacing={3} padding={1}>
+                        <CityComboBox
+                            onProvinceChange={handleProvinceChange}
+                            onDistrictChange={handleDistrictChange}
+                        />
                         </Stack>
                         <Stack direction="row" spacing={3} padding={1}>
                             <MultilineFormInput label="Açıklama" name="description" id="description" value={description} required onChange={e => setDesc(e.target.value)} />

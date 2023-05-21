@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ImageGallery from 'react-image-gallery';
-import { Stack } from "@mui/material";
 import { formatDate } from "../common/FormatDate";
 
 const BlogDetail = ({ match }) => {
@@ -10,6 +9,8 @@ const BlogDetail = ({ match }) => {
   const [project, setProject] = useState({});
   const [projectImages, setProjectImages] = useState([]);
   const [projectFeatures, setProjectFeatures] = useState([]);
+  const [projectLocation, setProjectLocation] = useState([]);
+
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/project/${ProjectId}`)
@@ -26,6 +27,7 @@ const BlogDetail = ({ match }) => {
           ]);
         });
         setProjectFeatures(res.data.features);
+        setProjectLocation(res.data.location);
       })
       .catch((error) => {
         console.error(error);
@@ -81,7 +83,12 @@ const BlogDetail = ({ match }) => {
             <div className="widget">
               <h5>Proje Adresi</h5>
               <div style={{ marginTop: "1rem" }} className="widget-content">
-                {project.address}
+              {projectLocation.map((location, index) => (
+                  <p className="fd-address" key={index}>
+                      <i className="fas fa-map-marker-alt" />
+                      {location.province} / {location.district}
+                  </p>
+              ))}
               </div>
             </div>
             <div className="widget">
@@ -98,14 +105,3 @@ const BlogDetail = ({ match }) => {
   );
 };
 export default BlogDetail;
-{
-  /* <div className="widget">
-              <div className="widget-content">
-                <input
-                  type="text"
-                  className="widget-search-inp"
-                  placeholder="Search"
-                />
-              </div>
-            </div> */
-}
