@@ -10,8 +10,8 @@ router.route('/task')
 
 router.route('/task/:id')
     .get(TaskCtrl.getTaskById)
-    .delete(auth, TaskCtrl.deleteTask)
-    .put(auth, TaskCtrl.updateTask)
+    .delete( TaskCtrl.deleteTask)
+    .put( TaskCtrl.updateTask)
 
 router.route('/task/email')
     .post(TaskCtrl.getTasksUser)

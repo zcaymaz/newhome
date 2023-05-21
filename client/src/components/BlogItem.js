@@ -1,14 +1,14 @@
 import { CardActionArea, Stack } from "@mui/material";
 import {formatDate} from "./common/FormatDate"
 
-const BlogItem = ({ title, ProjectId, description, finishDate, housingnumber, name, src }) => {
+const BlogItem = ({ title, ProjectId, description, finishDate, housingnumber, name, src, buttons }) => {
 
   const MAX_DESCRIPTION_LENGTH = 200;
 
   return (
     <div className="col-lg-4">
-        <CardActionArea href={`/blogdetail/${ProjectId}`}>
       <div className="blog-item">
+        <CardActionArea href={`/blogdetail/${ProjectId}`}>
         <div className="item-image">
             <img className="img-fluid" src={src} alt="blog" />
           </div>
@@ -36,8 +36,9 @@ const BlogItem = ({ title, ProjectId, description, finishDate, housingnumber, na
               : description}
           </div>
         </div>
-      </div>
       </CardActionArea>
+      {buttons}
+      </div>
     </div>
   );
 };

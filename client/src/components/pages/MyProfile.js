@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import SwipeableViews from 'react-swipeable-views';
-import { Avatar, Grid, InputLabel, Typography, AppBar, Tabs, Tab, Box } from '@mui/material'
+import { Avatar, Grid, InputLabel, Typography, AppBar, Tabs, Tab, Box, Button, Stack } from '@mui/material'
 import FlatItem from '../FlatItem'
 import BlogItem from '../BlogItem'
 import axios from 'axios'
 import logo from '../images/logo.png'
 import { FormInput, MultilineFormInput } from '../common/Inputs'
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -42,7 +43,7 @@ function a11yProps(index) {
     };
 }
 
-const MyProfile = () => {
+const MyProfile = (flatId) => {
     const [myAds, setMyAds] = useState([])
     const [myProject, setMyProject] = useState([])
     const theme = useTheme();
@@ -56,6 +57,30 @@ const MyProfile = () => {
         axios.post(`http://localhost:3001/api/project/email`, { useremail: localStorage.getItem('email') }).then((res) => { setMyProject(res.data) })
     }, [])
 
+    const handleDeleteConfirmation = (adId) => {
+        const confirmed = window.confirm('Silmek istediğinize emin misiniz?');
+        if (confirmed) {
+          // Silme işlemini gerçekleştir
+          axios.delete(`http://localhost:3001/api/task/${adId}`).then((res) => {
+            if (res.status === 200) {
+              setMyAds((prevAds) => prevAds.filter((ad) => ad._id !== adId));
+            }
+          });
+        }
+      };
+      
+      const handleDeleteConfirmationProject = (projectId) => {
+        const confirmed = window.confirm('Silmek istediğinize emin misiniz?');
+        if (confirmed) {
+          // Silme işlemini gerçekleştir
+          axios.delete(`http://localhost:3001/api/project/${projectId}`).then((res) => {
+            if (res.status === 200) {
+              setMyProject((prevProjects) => prevProjects.filter((project) => project._id !== projectId));
+            }
+          });
+        }
+      };
+      
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -63,6 +88,7 @@ const MyProfile = () => {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
+    
     return (
         <>
             <Grid container direction="row" justifyContent="center" alignItems="center">
@@ -113,6 +139,8 @@ const MyProfile = () => {
                                             {myAds.map((ad) => (
                                                 <>
                                                     <FlatItem
+                                                        key={ad._id}
+                                                        flatId={ad._id}
                                                         name={ad.name}
                                                         title={ad.title}
                                                         price={ad.price}
@@ -121,6 +149,12 @@ const MyProfile = () => {
                                                         squaremeters={ad.squaremeters}
                                                         onClick={() => localStorage.setItem('flatId', ad._id)}
                                                         src={ad.images && ad.images.length > 0 ? ad.images[0] : ad.image}
+                                                        buttons={      
+                                                        <Stack direction="row" spacing={3} alignItems="center" justifyContent="center">
+                                                            <Button className="adminButtonPut" component={Link} to={`/flatupdate/${ad._id}`}>Düzenle</Button>
+                                                            <Button className="adminButtonDelete" onClick={() => handleDeleteConfirmation(ad._id)}>Sil</Button>
+                                                        </Stack>
+                                                        }
                                                     />
                                                 </>
                                             ))}
@@ -142,6 +176,12 @@ const MyProfile = () => {
                                                 finishDate={project.finishDate}
                                                 housingnumber={project.housingnumber}
                                                 name={project.name}
+                                                buttons={      
+                                                <Stack direction="row" spacing={3} alignItems="center" justifyContent="center">
+                                                    <Button className="adminButtonPut" component={Link} to={`/projectupdate/${project._id}`}>Düzenle</Button>
+                                                    <Button className="adminButtonDelete" onClick={() => handleDeleteConfirmationProject(project._id)}>Sil</Button>
+                                                </Stack>
+                                                }
                                             />
                                         ))}
                                         </div>

@@ -6,12 +6,7 @@ const FlatItem = (props) => {
   const isAdmin = localStorage.getItem("role") === "1" ? true : false;
   const adminRouter = () => {
     return (
-      <Stack
-        direction="row"
-        spacing={3}
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Stack direction="row" spacing={3} alignItems="center" justifyContent="center">
         <Button className="adminButtonPut">Düzenle</Button>
         <Button className="adminButtonDelete">Sil</Button>
       </Stack>
@@ -51,6 +46,7 @@ const FlatItem = (props) => {
           </div>
         </CardActionArea>
         {isAdmin ? adminRouter() : null}
+        {props.buttons || null}
       </div>
     </div>
   );

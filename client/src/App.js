@@ -32,7 +32,9 @@ function App() {
           <Route path="/blogdetail/:id" component={BlogDetail}></Route>
           <Route path="/flatdetail/:id" component={FlatDetail}></Route>
           <Route path="/flatadd" component={FlatAdd}></Route>
+          <Route path="/flatupdate/:id" component={FlatAdd}></Route>
           <Route path="/projectadd" component={ProjectAdd}></Route>
+          <Route path="/projectupdate/:id" component={ProjectAdd}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
           <Route path="/test" component={Test}></Route>
