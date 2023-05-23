@@ -5,15 +5,12 @@ const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const cookieParser = require('cookie-parser')
 const path = require('path')
-
+const imageRoutes = require('./routes/imageRoutes');
 
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
-app.use(fileUpload({
-    useTempFiles: true
-}))
 
 // Routes
 app.use('/user', require('./routes/userRouter'))
@@ -22,6 +19,8 @@ app.use('/user', require('./routes/userRouter'))
 // app.use('/api', require('./routes/productRouter'))
 app.use('/api', require('./routes/projectRouter'))
 app.use('/api', require('./routes/taskRouter'))
+
+app.use('/api/images', imageRoutes);
 
 
 // Connect to mongodb
@@ -36,7 +35,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
     })
 }
-
 
 
 const PORT = process.env.PORT || 3001
