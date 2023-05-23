@@ -4,14 +4,6 @@ import { formatCurrency } from "./common/FormatCurrency";
 
 const FlatItem = (props) => {
   const isAdmin = localStorage.getItem("role") === "1" ? true : false;
-  const adminRouter = () => {
-    return (
-      <Stack direction="row" spacing={3} alignItems="center" justifyContent="center">
-        <Button className="adminButtonPut">Düzenle</Button>
-        <Button className="adminButtonDelete">Sil</Button>
-      </Stack>
-    );
-  };
 
   return (
     <div className="text-center col-lg-4 col-12 col-md-6 ">
@@ -45,7 +37,6 @@ const FlatItem = (props) => {
             </div>
           </div>
         </CardActionArea>
-        {isAdmin ? adminRouter() : null}
         {props.buttons || null}
       </div>
     </div>
