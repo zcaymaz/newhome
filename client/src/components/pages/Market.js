@@ -92,7 +92,6 @@ const Market = () => {
     setSearchTerm(e.target.value);
   };
 
-  console.log(selectedProvince.name)
   return (
     <>
       <section className="about">
