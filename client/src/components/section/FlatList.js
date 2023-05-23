@@ -3,22 +3,42 @@ import Title from "../common/Title";
 import FlatItem from "../FlatItem";
 import axios from 'axios';
 
-const FlatList = ({searchTerm, title}) => {
+const FlatList = ({ searchTerm, title, selectedProvince, selectedDistrict }) => {
   const [flat, setFlat] = useState([]);
+  const [flatLocation, setFlatLocation] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/task/`)
       .then((res) => {
         const reversedFlat = res.data.reverse();
         setFlat(reversedFlat);
+        const flatLocations = reversedFlat.map((flat) => flat.location);
+        setFlatLocation(flatLocations);
       })
       .catch((error) => { console.error(error); });
   }, []);
+  
 
-  const filteredFlat = flat.filter((flat) =>
-  flat.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  const filterFlatByLocation = (flat) => {
+    if (selectedProvince && selectedDistrict) {
+      return (
+        flat.location.province === selectedProvince.name &&
+        flat.location.district === selectedDistrict.name
+      );
+    } else if (selectedProvince) {
+      return flat.location.province === selectedProvince.name;
+    }
+    return true;
+  };
+  
+  let filteredFlat = flat.filter(filterFlatByLocation);
+  
+  if (searchTerm) {
+    filteredFlat = filteredFlat.filter((flatItem) =>
+      flatItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+  console.log(flatLocation)
   return (
     <section className="section-all-re">
       <div className="container">

@@ -1,8 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
-const ImageUploader = ({ value = [], onChange, pickImages }) => {
+const ImageUploader = ({ value, onChange, pickImages }) => {
   const [images, setImages] = useState(value || []);
   const fileInputRef = useRef();
+
+  useEffect(() => {
+    setImages(value)
+  }, [value])
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -48,7 +52,7 @@ const ImageUploader = ({ value = [], onChange, pickImages }) => {
   const handleClick = () => {
     fileInputRef.current.click();
   };
-
+  
   return (
     <div className="image-uploader" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
       <div className="drop-message" onClick={handleClick}>Resim yükle</div>

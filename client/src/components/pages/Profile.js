@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import SwipeableViews from 'react-swipeable-views';
-import { Avatar, Grid, InputLabel, Typography, AppBar, Tabs, Tab, Box, Button, Stack } from '@mui/material'
+import { Avatar, Grid, InputLabel, Typography, AppBar, Tabs, Tab, Box } from '@mui/material'
 import FlatItem from '../FlatItem'
 import BlogItem from '../BlogItem'
 import axios from 'axios'
 import logo from '../images/logo.png'
 import { FormInput, MultilineFormInput } from '../common/Inputs'
-import { Link } from "react-router-dom";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -43,44 +42,32 @@ function a11yProps(index) {
     };
 }
 
-const MyProfile = (flatId) => {
+const Profile = (flatId) => {
     const [myAds, setMyAds] = useState([])
     const [myProject, setMyProject] = useState([])
+    const [user, setUser] = useState([])
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
     useEffect(() => {
-        axios.post(`http://localhost:3001/api/task/email`, { useremail: localStorage.getItem('email') }).then((res) => { setMyAds(res.data) })
+        axios.post(`http://localhost:3001/api/task/email`, { useremail: localStorage.getItem('useremail') }).then((res) => { setMyAds(res.data) })
     }, [])
 
     useEffect(() => {
-        axios.post(`http://localhost:3001/api/project/email`, { useremail: localStorage.getItem('email') }).then((res) => { setMyProject(res.data) })
+        axios.post(`http://localhost:3001/api/project/email`, { useremail: localStorage.getItem('useremail') }).then((res) => { setMyProject(res.data) })
     }, [])
 
-    const handleDeleteConfirmation = (adId) => {
-        const confirmed = window.confirm('Silmek istediğinize emin misiniz?');
-        if (confirmed) {
-          // Silme işlemini gerçekleştir
-          axios.delete(`http://localhost:3001/api/task/${adId}`).then((res) => {
-            if (res.status === 200) {
-              setMyAds((prevAds) => prevAds.filter((ad) => ad._id !== adId));
-            }
+    useEffect(() => {
+        axios.post(`http://localhost:3001/user/useremail`, { email: localStorage.getItem('useremail') })
+          .then((res) => {
+            setUser(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        }
-      };
+      }, []);
       
-      const handleDeleteConfirmationProject = (projectId) => {
-        const confirmed = window.confirm('Silmek istediğinize emin misiniz?');
-        if (confirmed) {
-          // Silme işlemini gerçekleştir
-          axios.delete(`http://localhost:3001/api/project/${projectId}`).then((res) => {
-            if (res.status === 200) {
-              setMyProject((prevProjects) => prevProjects.filter((project) => project._id !== projectId));
-            }
-          });
-        }
-      };
-      
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -97,7 +84,7 @@ const MyProfile = (flatId) => {
                         <Grid item xs={12} md={6} p={1} justifyContent="center">
                             <center>
                                 <Avatar src={logo} sx={{ width: 170, height: 170, border: '1px solid #ededed' }} />
-                                <Typography sx={{ fontSize: '20px' }}>{localStorage.getItem('name')}</Typography>
+                                <Typography sx={{ fontSize: '20px' }}>{user.name}</Typography>
                             </center>
                         </Grid>
                         <Grid item xs={12} md={6} pl={1}>
@@ -105,12 +92,12 @@ const MyProfile = (flatId) => {
                                 <Grid item xs={12} pt={1}>
                                     <div>
                                         <InputLabel>Telefon Numarası:</InputLabel>
-                                        <FormInput placeholder={localStorage.getItem('gsmno')} disabled />
+                                        <FormInput placeholder={user.gsmno} disabled />
                                     </div>
                                 </Grid>
                                 <Grid item xs pt={1}>
                                     <InputLabel>Adres:</InputLabel>
-                                    <MultilineFormInput placeholder={localStorage.getItem('address')} disabled />
+                                    <MultilineFormInput placeholder={user.address} disabled />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -127,8 +114,8 @@ const MyProfile = (flatId) => {
                                 variant="fullWidth"
                                 aria-label="full width tabs example"
                             >
-                                <Tab sx={{ fontSize: '20px' }} label="İlanlarım" {...a11yProps(0)} />
-                                <Tab sx={{ fontSize: '20px' }} label="Projelerim" {...a11yProps(1)} />
+                                <Tab sx={{ fontSize: '20px' }} label="İlanlar" {...a11yProps(0)} />
+                                <Tab sx={{ fontSize: '20px' }} label="Projeler" {...a11yProps(1)} />
                             </Tabs>
                         </AppBar>
                         <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={value} onChangeIndex={handleChangeIndex}>
@@ -149,12 +136,6 @@ const MyProfile = (flatId) => {
                                                         squaremeters={ad.squaremeters}
                                                         onClick={() => localStorage.setItem('flatId', ad._id)}
                                                         src={ad.images && ad.images.length > 0 ? ad.images[0] : ad.image}
-                                                        buttons={      
-                                                        <Stack direction="row" spacing={3} alignItems="center" justifyContent="center">
-                                                            <Button className="adminButtonPut" component={Link} to={`/flatupdate/${ad._id}`}>Düzenle</Button>
-                                                            <Button className="adminButtonDelete" onClick={() => handleDeleteConfirmation(ad._id)}>Sil</Button>
-                                                        </Stack>
-                                                        }
                                                     />
                                                 </>
                                             ))}
@@ -176,12 +157,6 @@ const MyProfile = (flatId) => {
                                                 finishDate={project.finishDate}
                                                 housingnumber={project.housingnumber}
                                                 name={project.name}
-                                                buttons={      
-                                                <Stack direction="row" spacing={3} alignItems="center" justifyContent="center">
-                                                    <Button className="adminButtonPut" component={Link} to={`/projectupdate/${project._id}`}>Düzenle</Button>
-                                                    <Button className="adminButtonDelete" onClick={() => handleDeleteConfirmationProject(project._id)}>Sil</Button>
-                                                </Stack>
-                                                }
                                             />
                                         ))}
                                         </div>
@@ -196,4 +171,4 @@ const MyProfile = (flatId) => {
     )
 }
 
-export default MyProfile
+export default Profile
