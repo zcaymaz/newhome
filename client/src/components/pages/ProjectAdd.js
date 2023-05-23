@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Grid, Stack, Typography, Button, Container } from '@mui/material';
 import { FormInput, MultilineFormInput } from '../common/Inputs';
@@ -36,7 +37,18 @@ const ProjectAdd = ({ match }) => {
       setHousingNumber('');
       setFeatures([]);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
+
+  function isoDateToCustomFormat(isoDate) {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+  }
+  
 
   const getAdDetails = async () => {
     try {
@@ -45,8 +57,8 @@ const ProjectAdd = ({ match }) => {
       const ad = res.data;
       setTitle(ad.title);
       setLocation(ad.location);
-      setStartDate(ad.startDate);
-      setFinishDate(ad.finishDate);
+      setStartDate(isoDateToCustomFormat(ad.startDate));
+      setFinishDate(isoDateToCustomFormat(ad.finishDate));
       setDesc(ad.description);
       setImages(ad.images);
       setHousingNumber(ad.housingnumber);

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ImageGallery from 'react-image-gallery';
 import { formatDate } from "../common/FormatDate";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const BlogDetail = ({ match }) => {
   const ProjectId = match.params.id;
@@ -28,6 +30,7 @@ const BlogDetail = ({ match }) => {
         });
         setProjectFeatures(res.data.features);
         setProjectLocation(res.data.location);
+        localStorage.setItem('useremail', res.data.useremail);
       })
       .catch((error) => {
         console.error(error);
@@ -68,6 +71,9 @@ const BlogDetail = ({ match }) => {
                 <ul className="category-ul">
                   <li><i style={{ paddingRight: '0.6rem' }} className="fas fa-store" />{project.name}</li>
                 </ul>
+                <div className="recently-item">
+                  <Button sx={{width:'60%'}} className="FlatAddButton" component={Link} to={`/profile`}>İletişime Geç</Button>
+                </div>
               </div>
             </div>
             <div className="widget">

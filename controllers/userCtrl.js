@@ -123,9 +123,24 @@ const userCtrl = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
-    }
+    },
+    getUserByEmail: async (req, res) => {
+        try {
+          const { email } = req.body;
+          
+          const user = await Users.findOne({ email });
+          
+          if (!user) {
+            return res.status(404).json({ msg: 'Kullanıcı bulunamadı.' });
+          }
+          // Kullanıcının istediğiniz bilgilerini döndürebilirsiniz
+          const { name, vkn, gsmno, address } = user;
+          res.json({ name, email, vkn, gsmno, address });
+        } catch (err) {
+          return res.status(500).json({ msg: err.message });
+        }
+      },
  }
-
 
 const createAccessToken = (user) =>{
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '11m'})

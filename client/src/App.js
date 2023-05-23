@@ -13,6 +13,7 @@ import FlatAdd from './components/pages/FlatAdd';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import MyProfile from './components/pages/MyProfile';
+import Profile from './components/pages/Profile';
 import ProjectAdd from './components/pages/ProjectAdd';
 import Test from './components/pages/Test';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/market" component={Market}></Route>
           <Route path="/dashboard" component={DashBoard}></Route>
           <Route path="/myprofile" component={MyProfile}></Route>
+          <Route path="/profile" component={Profile}></Route>
           <Route path="/blog" exact component={Blog}></Route>
           <Route path="/blogdetail/:id" component={BlogDetail}></Route>
           <Route path="/flatdetail/:id" component={FlatDetail}></Route>

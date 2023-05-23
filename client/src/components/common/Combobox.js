@@ -4,16 +4,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 import { Stack } from '@mui/material';
 
-export default function CityComboBox({ onProvinceChange, onDistrictChange }) {
+export default function CityComboBox({ onProvinceChange, onDistrictChange, districtValue, provinceValue }) {
   const [provinces, setProvinces] = useState([]);
-  const [selectedProvince, setSelectedProvince] = useState(null);
   const [districts, setDistricts] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
-
-  useEffect(() => {
-    fetchProvinces();
-  }, []);
-
+  
   const fetchProvinces = async () => {
     try {
       const response = await axios.get('https://turkiyeapi.cyclic.app/api/v1/provinces/');
@@ -46,6 +42,11 @@ export default function CityComboBox({ onProvinceChange, onDistrictChange }) {
     onDistrictChange(event, value); 
   };
 
+  useEffect(() => {
+    fetchProvinces();
+  }, [provinceValue, districtValue]);
+  
+
   return (
     <Stack direction="row" spacing={3} width="100%">
       <Autocomplete
@@ -59,6 +60,7 @@ export default function CityComboBox({ onProvinceChange, onDistrictChange }) {
         onChange={handleProvinceChange}
         value={selectedProvince}
         isOptionEqualToValue={(option, value) => option.id === value?.id}
+        defaultValue={provinceValue}
       />
       {selectedProvince && (
         <Autocomplete
@@ -71,7 +73,9 @@ export default function CityComboBox({ onProvinceChange, onDistrictChange }) {
           getOptionLabel={(option) => option.name}
           onChange={handleDistrictChange}
           value={selectedDistrict}
-          isOptionEqualToValue={(option, value) => option.id === value?.id} 
+          isOptionEqualToValue={(option, value) => option.id === value?.id}
+          defaultValue={districtValue}
+
         />
       )}
     </Stack>

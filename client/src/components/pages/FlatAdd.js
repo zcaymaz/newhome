@@ -187,6 +187,8 @@ const FlatAdd = ({ match }) => {
               <CityComboBox
                 onProvinceChange={handleProvinceChange}
                 onDistrictChange={handleDistrictChange}
+                provinceValue={selectedProvince}
+                districtValue={selectedDistrict}
               />
             </Stack>
             <Stack direction="row" spacing={3} padding={1}>

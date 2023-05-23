@@ -4,6 +4,8 @@ import ImageGallery from 'react-image-gallery';
 import { Store } from "@mui/icons-material";
 import axios from 'axios';
 import { formatCurrency } from "../common/FormatCurrency";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const FlatDetail = ({match}) => {
     const flatId = match.params.id;
@@ -24,6 +26,7 @@ const FlatDetail = ({match}) => {
                 });
                 setFlatFeatures(res.data.features);
                 setflatLocation(res.data.location);
+                localStorage.setItem('useremail', res.data.useremail);
             })
             .catch((error) => { console.error(error); });
     }, [flatId]);
@@ -105,6 +108,10 @@ const FlatDetail = ({match}) => {
                                     <ul className="category-ul">
                                         <div>
                                             <Store fontSize="large" /><span> {flat.name} </span>
+                                        </div>
+                                        <br/>
+                                        <div className="recently-item">
+                                        <Button sx={{width:'60%'}} className="FlatAddButton" component={Link} to={`/profile/`}>İletişime Geç</Button>
                                         </div>
                                     </ul>
                                 </div>
