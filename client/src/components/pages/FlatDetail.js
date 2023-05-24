@@ -7,7 +7,7 @@ import { formatCurrency } from "../common/FormatCurrency";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const FlatDetail = ({match}) => {
+const FlatDetail = ({ match }) => {
     const flatId = match.params.id;
     const [flat, setFlat] = useState({});
     const [flatImages, setFlatImages] = useState([]);
@@ -59,9 +59,10 @@ const FlatDetail = ({match}) => {
                                 <span className="fd-price">{formatCurrency(flat.price)}</span>
                             </div>
                         </div>
-                        <ImageGallery flickThreshold={0.50} slideDuration={0} items={flatImages} showNav={true} showFullscreenButton={true} showPlayButton={false} />
                         <div className="row">
                             <div className="col-lg-8">
+                                <ImageGallery flickThreshold={0.50} slideDuration={0} items={flatImages} showNav={true} showFullscreenButton={true} showPlayButton={false} />
+
                                 <div className="fd-item fd-property-detail">
                                     <h4>İlan Bilgileri</h4>
                                     <div className="row">
@@ -109,9 +110,9 @@ const FlatDetail = ({match}) => {
                                         <div>
                                             <Store fontSize="large" /><span> {flat.name} </span>
                                         </div>
-                                        <br/>
+                                        <br />
                                         <div className="recently-item">
-                                        <Button sx={{width:'60%'}} className="FlatAddButton" component={Link} to={`/profile/`}>İletişime Geç</Button>
+                                            <Button sx={{ width: '60%' }} className="FlatAddButton" component={Link} to={`/profile/`}>İletişime Geç</Button>
                                         </div>
                                     </ul>
                                 </div>

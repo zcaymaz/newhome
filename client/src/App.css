@@ -891,3 +891,7 @@ img {
   background-color: #dfdfdf47;
   height: 100vh;
 }
+
+.img-fluid {
+  max-height: 250px;
+}
