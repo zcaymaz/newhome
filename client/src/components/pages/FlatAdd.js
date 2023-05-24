@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import { Grid, Stack, Typography, Button, Container } from '@mui/material';
 import axios from 'axios';
 import { FormInput, MultilineFormInput } from '../common/Inputs';
@@ -110,7 +111,7 @@ const FlatAdd = ({ match }) => {
       }
       setOnEdit(false);
       setTitle('');
-      setLocation({ province: '', district: '' });
+      setLocation({});
       setPrice('');
       setDesc('');
       setType('');

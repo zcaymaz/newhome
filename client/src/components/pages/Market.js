@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import Footer from "../Footer";
-import Title from "../common/Title";
 import FlatItem from "../FlatItem";
-import { Stack, Autocomplete, TextField } from "@mui/material";
+import { Stack, Autocomplete, TextField, Button } from "@mui/material";
 import axios from "axios";
+import { SelectResidence, SelectRoomCount, SelectSaleType } from '../common/SelectComp';
 
 const Market = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,9 +13,11 @@ const Market = () => {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [districts, setDistricts] = useState([]);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
-
   const [flat, setFlat] = useState([]);
-  const [flatLocation, setFlatLocation] = useState([]);
+  const [filteredFlats, setFilteredFlats] = useState(null);
+  const [type, setType] = useState("");
+  const [roomnumber, setRoomNumber] = useState("");
+  const [saletype, setSaleType] = useState("");
 
   useEffect(() => {
     axios
@@ -22,33 +25,54 @@ const Market = () => {
       .then((res) => {
         const reversedFlat = res.data.reverse();
         setFlat(reversedFlat);
-        const flatLocations = reversedFlat.map((flat) => flat.location);
-        setFlatLocation(flatLocations);
+        setFilteredFlats(null)
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
-  const filterFlatByLocation = (flat) => {
-    if (selectedProvince && selectedDistrict) {
-      return (
-        flat.location.province === selectedProvince.name &&
-        flat.location.district === selectedDistrict.name
+  useEffect(() => {
+    filterFlatByLocation();
+  }, [selectedDistrict, selectedProvince, searchTerm, type, roomnumber, saletype]);
+  
+
+  const filterFlatByLocation = () => {
+    let filteredData = flat.filter((fl) => {
+      if (selectedProvince && selectedDistrict) {
+        return (
+          fl?.location?.[0]?.province === selectedProvince.name &&
+          fl?.location?.[0]?.district === selectedDistrict.name
+        );
+      }
+  
+      if (selectedProvince) {
+        return fl?.location?.[0]?.province === selectedProvince.name;
+      }
+      return true;
+    });
+  
+    if (searchTerm) {
+      filteredData = filteredData.filter((fl) =>
+        fl.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    } else if (selectedProvince) {
-      return flat.location.province === selectedProvince.name;
     }
-    return true;
+  
+    if (type) {
+      filteredData = filteredData.filter((fl) => fl.type === type);
+    }
+  
+    if (roomnumber) {
+      filteredData = filteredData.filter((fl) => fl.roomnumber === roomnumber);
+    }
+  
+    if (saletype) {
+      filteredData = filteredData.filter((fl) => fl.saletype === saletype);
+    }
+  
+    setFilteredFlats(filteredData);
   };
-
-  let filteredFlat = flat.filter(filterFlatByLocation);
-
-  if (searchTerm) {
-    filteredFlat = filteredFlat.filter((flatItem) =>
-      flatItem.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
+  
 
   const fetchProvinces = async () => {
     try {
@@ -78,10 +102,14 @@ const Market = () => {
     if (value) {
       fetchDistricts(value.id);
     }
+
+    filterFlatByLocation();
   };
 
   const handleDistrictChange = (event, value) => {
     setSelectedDistrict(value);
+
+    filterFlatByLocation();
   };
 
   useEffect(() => {
@@ -92,6 +120,14 @@ const Market = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleReset = () => {
+    setSearchTerm("");
+    setSelectedProvince(null);
+    setSelectedDistrict(null);
+    setType("");
+    setRoomNumber("");
+    setSaleType("");
+  };
   return (
     <>
       <section className="about">
@@ -154,23 +190,66 @@ const Market = () => {
                     onChange={handleSearch}
                     placeholder="İlan Ara"
                   />
-                  <button className="btn-search2">
-                    <i
-                      className="fas fa-search"
-                      style={{ marginRight: "8px" }}
-                    />
-                    Ara
-                  </button>
                 </div>
+              </div>
+              <div className="col-lg-3 mt-3">
+                <div className="search-area2">
+                <SelectResidence
+                name="type"
+                id="type"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                />
+                </div>
+              </div>
+              <div className="col-lg-3 mt-3">
+                <div className="search-area2">
+                <SelectRoomCount
+                  name="roomnumber"
+                  id="roomnumber"
+                  value={roomnumber}
+                  onChange={(e) => setRoomNumber(e.target.value)}
+                />
+                </div>
+              </div>
+              <div className="col-lg-3 mt-3">
+                <div className="search-area2">
+                <SelectSaleType
+                  name="saletype"
+                  id="saletype"
+                  value={saletype}
+                  onChange={(e) => setSaleType(e.target.value)}
+                />
+                </div>
+              </div>
+              <div className="col-lg-3 mt-4">
+                <Button sx={{color:'#ffff', bgcolor:'#0f0f0f', height:'40px', padding:'1rem', "&:hover": {bgcolor: "primary.dark"},}} onClick={handleReset}>
+                  Sıfırla
+                </Button>
               </div>
             </div>
           </div>
         </section>
         <section className="section-all-re">
           <div className="container">
-            <Title title={" "} />
             <div className="row">
-              {filteredFlat.map((flat) => (
+              {!filteredFlats ? flat.map((flat) => (
+                <FlatItem
+                  key={flat._id}
+                  flatId={flat._id}
+                  src={
+                    flat.images && flat.images.length > 0
+                      ? flat.images[0]
+                      : flat.image
+                  }
+                  name={flat.name}
+                  title={flat.title}
+                  price={flat.price}
+                  type={flat.type}
+                  roomnumber={flat.roomnumber}
+                  squaremeters={flat.squaremeters}
+                />
+              )) : filteredFlats.map((flat) => (
                 <FlatItem
                   key={flat._id}
                   flatId={flat._id}

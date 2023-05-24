@@ -1,9 +1,8 @@
 import { Store, Home, Chair, SelectAll } from "@mui/icons-material";
-import { Button, CardActionArea, Stack } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 import { formatCurrency } from "./common/FormatCurrency";
 
 const FlatItem = (props) => {
-  const isAdmin = localStorage.getItem("role") === "1" ? true : false;
 
   return (
     <div className="text-center col-lg-4 col-12 col-md-6 ">
@@ -14,7 +13,7 @@ const FlatItem = (props) => {
           </div>
           <div className="item-description">
             <div className="d-flex justify-content-between mb-3">
-              <span className="item-title">{props.title}</span>
+              <span className="item-title" style={{textTransform:'uppercase'}}>{props.title}</span>
               <span className="item-price">{formatCurrency(props.price)}</span>
             </div>
             <div className="item-icon d-flex alig-items-center justify-content-between">
