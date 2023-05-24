@@ -40,8 +40,9 @@ const BlogDetail = ({ match }) => {
   return (
     <div className="container mt-4 mb-4">
       <div className="row">
-        <ImageGallery flickThreshold={0.50} slideDuration={0} items={projectImages} showNav={true} showFullscreenButton={true} showPlayButton={false} />
         <div className="col-lg-8">
+          <ImageGallery flickThreshold={0.50} slideDuration={0} items={projectImages} showNav={true} showFullscreenButton={true} showPlayButton={false} />
+
           <div className="blog-detail">
             <span className="blog-detail-category"></span>
             <h2 style={{ marginTop: "2rem" }} className="blog-detail-title">
@@ -72,7 +73,7 @@ const BlogDetail = ({ match }) => {
                   <li><i style={{ paddingRight: '0.6rem' }} className="fas fa-store" />{project.name}</li>
                 </ul>
                 <div className="recently-item">
-                  <Button sx={{width:'60%'}} className="FlatAddButton" component={Link} to={`/profile`}>İletişime Geç</Button>
+                  <Button sx={{ width: '60%' }} className="FlatAddButton" component={Link} to={`/profile`}>İletişime Geç</Button>
                 </div>
               </div>
             </div>
@@ -89,12 +90,12 @@ const BlogDetail = ({ match }) => {
             <div className="widget">
               <h5>Proje Adresi</h5>
               <div style={{ marginTop: "1rem" }} className="widget-content">
-              {projectLocation.map((location, index) => (
+                {projectLocation.map((location, index) => (
                   <p className="fd-address" key={index}>
-                      <i className="fas fa-map-marker-alt" />
-                      {location.province} / {location.district}
+                    <i className="fas fa-map-marker-alt" />
+                    {location.province} / {location.district}
                   </p>
-              ))}
+                ))}
               </div>
             </div>
             <div className="widget">
