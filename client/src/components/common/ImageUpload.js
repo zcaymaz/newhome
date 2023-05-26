@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const ImageUploader = ({ value, onChange, pickImages }) => {
+const ImageUploader = ({ value, onChange }) => {
   const [images, setImages] = useState(value || []);
   const fileInputRef = useRef();
 
@@ -10,36 +10,20 @@ const ImageUploader = ({ value, onChange, pickImages }) => {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    const newImages = [];
-    for (let i = 0; i < e.dataTransfer.files.length; i++) {
-      const file = e.dataTransfer.files[i];
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        newImages.push(event.target.result);
-        if (newImages.length === e.dataTransfer.files.length) {
-          setImages([...images, ...newImages]);
-          if (onChange) onChange([...images, ...newImages]);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+    const files = e.dataTransfer.files;
+    uploadImages(files);
   };
 
-  const handleFileSelect = (e) => {
-    const newImages = [];
-    for (let i = 0; i < e.target.files.length; i++) {
-      const file = e.target.files[i];
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        newImages.push(event.target.result);
-        if (newImages.length === e.target.files.length) {
-          setImages([...images, ...newImages]);
-          if (onChange) onChange([...images, ...newImages]);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-    pickImages(newImages);
+  const handleImageChange = (e) => {
+    const newImages = Array.from(e.target.files);
+    setImages([...images, ...newImages]);
+    if (onChange) onChange([...images, ...newImages]);
+  };
+  
+  const uploadImages = (files) => {
+    const newImages = Array.from(files);
+    setImages([...images, ...newImages]);
+    if (onChange) onChange([...images, ...newImages]);
   };
 
   const handleRemoveImage = (index) => {
@@ -56,13 +40,13 @@ const ImageUploader = ({ value, onChange, pickImages }) => {
   return (
     <div className="image-uploader" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
       <div className="drop-message" onClick={handleClick}>Resim yükle</div>
-      <input type="file" id="file-input" multiple onChange={handleFileSelect} ref={fileInputRef} style={{ display: "none" }} />
+      <input type="file" id="file-input" multiple onChange={handleImageChange} ref={fileInputRef} style={{ display: "none" }} />
       <div className="preview">
         {images.map((image, index) => (
           <div className="image-container" key={index}>
             <button className="remove-image" onClick={() => handleRemoveImage(index)}>X</button>
             <center>
-              <img className="imageuploadphoto" src={image} alt='flat' />
+              <img className="imageuploadphoto" src={typeof image === 'string' ? image : URL.createObjectURL(image)} alt='flat' />
             </center>
           </div>
         ))}

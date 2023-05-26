@@ -1,23 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ImageForm = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+const ImageForm = ({ onUpload, onSubmit }) => {
   const [selectedImages, setSelectedImages] = useState([]);
 
   const handleImageChange = (e) => {
     setSelectedImages(Array.from(e.target.files));
   };
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,26 +15,21 @@ const ImageForm = () => {
     selectedImages.forEach((image) => {
       formData.append('images', image);
     });
-    formData.append('name', name);
-    formData.append('description', description);
 
     try {
-      await axios.post('http://localhost:3001/api/images/upload', formData);
+      const res = await axios.post('http://localhost:3001/api/images/upload', formData);
       setSelectedImages([]);
-      setName('');
-      setDescription('');
+      onUpload(res.data.images); // Yüklenen resimleri üst bileşene iletmek için onUpload fonksiyonunu çağırıyoruz
+      onSubmit(); // Submit işlemini üst bileşene iletmek için onSubmit fonksiyonunu çağırıyoruz
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <input type="file" multiple onChange={handleImageChange} />
-      <input type="text" value={name} onChange={handleNameChange} placeholder="Name" />
-      <input type="text" value={description} onChange={handleDescriptionChange} placeholder="Description" />
-      <button type="submit">Upload</button>
-    </form>
+    </div>
   );
 };
 
