@@ -32,7 +32,7 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
     images:{
-        type: Array,
+        type: [String],
     },
     housingnumber:{
         type: String,

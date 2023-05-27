@@ -34,16 +34,47 @@ const TaskCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    createTask: async (req, res) => {
-        try {
-            const { name, useremail, title, location, price, description, type, images, roomnumber, saletype, features, squaremeters } = req.body;
+    // createTask: async (req, res) => {
+    //     try {
+    //         const { name, useremail, title, location, price, description, type, images, roomnumber, saletype, features, squaremeters } = req.body;
 
-            const newTask = new Task({
-                name, useremail, title, location, price, description, type, images, roomnumber, saletype, features, squaremeters
+    //         const newTask = new Task({
+    //             name, useremail, title, location, price, description, type, images, roomnumber, saletype, features, squaremeters
+    //         })
+
+    //         await newTask.save()
+    //         res.json({ msg: "Yeni Task Oluşturuldu." })
+    //     } catch (err) {
+    //         return res.status(500).json({ msg: err.message })
+    //     }
+    // },
+    createTask: async (req, res) => {
+        const imageUrls = req.files.map((file) => file.path);
+        const { name, useremail, title, location, price, description, type, roomnumber, saletype, features, squaremeters } = req.body;
+      
+        try {
+          const newTask = new Task({
+            name, useremail, title, location, price, description, type, images: imageUrls, roomnumber, saletype, features, squaremeters
+          });
+      
+          await newTask.save();
+      
+          res.status(200).json({ success: true, message: 'Yeni ilan oluşturuldu.' });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Server error' });
+        }
+    },
+    updateTask: async (req, res) => {
+        try {
+            const imageUrls = req.files.map((file) => file.path);
+            const { name, useremail, title, location, price, description, type, roomnumber, saletype, features, squaremeters } = req.body;
+    
+            await Task.findOneAndUpdate({ _id: req.params.id }, {
+                name, useremail, title, location, price, description, type, images: imageUrls, roomnumber, saletype, features, squaremeters
             })
 
-            await newTask.save()
-            res.json({ msg: "Yeni Task Oluşturuldu." })
+            res.json({ msg: "Task Güncellendi." })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
@@ -56,19 +87,6 @@ const TaskCtrl = {
             return res.status(500).json({ msg: 'Silinemedi.' })
         }
     },
-    updateTask: async (req, res) => {
-        try {
-            const { name, useremail, title, location, price, description, type, images, roomnumber, saletype, features, squaremeters } = req.body;
-
-            await Task.findOneAndUpdate({ _id: req.params.id }, {
-                name, useremail, title, location, price, description, type, images, roomnumber, saletype, features, squaremeters
-            })
-
-            res.json({ msg: "Task Güncellendi." })
-        } catch (err) {
-            return res.status(500).json({ msg: err.message })
-        }
-    }
 }
 
 module.exports = TaskCtrl

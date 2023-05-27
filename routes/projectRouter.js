@@ -1,16 +1,15 @@
 const router = require('express').Router();
 const ProjectCtrl = require('../controllers/projectCtrl');
-const auth = require('../middleware/auth');
-
+const uploadMiddleware = require('../middleware/uploadMiddleware');
 
 router.route('/project')
     .get(ProjectCtrl.getProjects)
-    .post(ProjectCtrl.createProject)
+    .post(uploadMiddleware.array('images', 10), ProjectCtrl.createProject)
 
 router.route('/project/:id')
     .get(ProjectCtrl.getProjectById)
     .delete(ProjectCtrl.deleteProject)
-    .put(ProjectCtrl.updateProject)
+    .put(uploadMiddleware.array('images', 10), ProjectCtrl.updateProject)
 
 router.route('/project/email')
     .post(ProjectCtrl.getProjectsUser)

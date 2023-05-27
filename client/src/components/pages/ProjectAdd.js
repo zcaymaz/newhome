@@ -11,6 +11,7 @@ const ProjectAdd = ({ match }) => {
   const projectId = match.params.id;
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState({ province: '', district: '' });
@@ -40,6 +41,86 @@ const ProjectAdd = ({ match }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
+  const handleImageChange = (images) => {
+    const convertedImages = Array.from(images).map((image) => URL.createObjectURL(image));
+    setSelectedImages(convertedImages);
+  };
+  
+  const getAdDetails = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3001/api/project/${projectId}`);
+      console.log(res.data)
+      const ad = res.data;
+      setTitle(ad.title);
+      setSelectedProvince(ad.location[0].province);
+      setSelectedDistrict(ad.location[0].district);
+      setStartDate(isoDateToCustomFormat(ad.startDate));
+      setFinishDate(isoDateToCustomFormat(ad.finishDate));
+      setDesc(ad.description);
+      setImages(ad.images);
+      setHousingNumber(ad.housingnumber);
+      setFeatures(ad.features);
+      setSelectedImages(ad.images); // Güncelleme: Sunucudan gelen resimleri selectedImages state'ine ekliyoruz
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    selectedImages.forEach((image) => {
+      formData.append('images', image);
+    });
+    await Promise.all(
+      selectedImages.map(async (imageUrl, index) => {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        formData.append('images', blob, `image${index}`);
+      })
+    );
+    formData.append('name', localStorage.getItem('name'));
+    formData.append('useremail', localStorage.getItem('email'));
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('location[province]', selectedProvince);
+    formData.append('location[district]', selectedDistrict);
+    formData.append('housingnumber', housingnumber);
+    formData.append('startDate', startDate);
+    formData.append('finishDate', finishDate);
+    features.forEach((feature, index) => {
+      formData.append(`features[${index}][title]`, feature.title);
+    });
+    
+    if (selectedImages.length > 0) {
+      formData.append('images', selectedImages[0]);
+    }
+    try {
+      if (onEdit) {
+        const res = await axios.put(`http://localhost:3001/api/project/${projectId}`, formData);
+        console.log(res.data.msg);
+      } else {
+        const res = await axios.post('http://localhost:3001/api/project', formData);
+        console.log(res.data.msg);
+      }
+      setOnEdit(false);
+      setTitle('');
+      setLocation([]);
+      setStartDate('');
+      setFinishDate('');
+      setDesc('');
+      setHousingNumber('');
+      setFeatures([]);
+      setSelectedImages([]);
+      window.location.href = 'http://localhost:3000/projectadd';
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
+
+
   function isoDateToCustomFormat(isoDate) {
     const date = new Date(isoDate);
     const year = date.getFullYear();
@@ -49,88 +130,19 @@ const ProjectAdd = ({ match }) => {
     return `${year}-${month}-${day}`;
   }
   
-
-  const getAdDetails = async () => {
-    try {
-      const res = await axios.get(`http://localhost:3001/api/project/${projectId}`);
-      console.log(res.data)
-      const ad = res.data;
-      setTitle(ad.title);
-      setLocation(ad.location);
-      setStartDate(isoDateToCustomFormat(ad.startDate));
-      setFinishDate(isoDateToCustomFormat(ad.finishDate));
-      setDesc(ad.description);
-      setImages(ad.images);
-      setHousingNumber(ad.housingnumber);
-      setFeatures(ad.features);
-    } catch (error) {
-      console.log(error.response.data.msg);
-    }
-  };
-
-  const createProject = async (e) => {
-    e.preventDefault();
-    try {
-      if (onEdit) {
-        const res = await axios.put(
-          `http://localhost:3001/api/project/${projectId}`,
-          {
-            name: localStorage.getItem('name'),
-            useremail: localStorage.getItem('email'),
-            title: title,
-            location: location,
-            startDate: startDate,
-            finishDate: finishDate,
-            description: description,
-            images: images,
-            housingnumber: housingnumber,
-            features: features,
-          }
-        );
-        console.log(res.data.msg);
-      } else {
-        const res = await axios.post('http://localhost:3001/api/project/', {
-          name: localStorage.getItem('name'),
-          useremail: localStorage.getItem('email'),
-          title: title,
-          location: location,
-          startDate: startDate,
-          finishDate: finishDate,
-          description: description,
-          images: images,
-          housingnumber: housingnumber,
-          features: features,
-        });
-        console.log(res.data.msg);
-      }
-      setOnEdit(false);
-      setTitle('');
-      setLocation([]);
-      setStartDate('');
-      setFinishDate('');
-      setDesc('');
-      setImages([]);
-      setHousingNumber('');
-      setFeatures([]);
-      window.location.href = 'http://localhost:3000/ProjectAdd';
-    } catch (err) {
-      alert(err.response.data.msg);
-    }
-  };
-
   const handleProvinceChange = (event, value) => {
-    setSelectedProvince(value);
+    setSelectedProvince(value ? value.name : location.province);
     setLocation((prevState) => ({
       ...prevState,
-      province: value ? value.name : '',
+      province: value ? value.name : location.province,
     }));
   };
-
+  
   const handleDistrictChange = (event, value) => {
-    setSelectedDistrict(value);
+    setSelectedDistrict(value ? value.name : location.district);
     setLocation((prevState) => ({
       ...prevState,
-      district: value ? value.name : '',
+      district: value ? value.name : location.district,
     }));
   };
 
@@ -153,8 +165,8 @@ const ProjectAdd = ({ match }) => {
               <hr />
             </Typography>
           )}
-          <form onSubmit={createProject}>
-            <ImageUploader value={images} pickImages={setImages} />
+          <form onSubmit={handleSubmit}>
+          <ImageUploader value={selectedImages} onChange={handleImageChange}/>
             <Stack direction="row" spacing={3} padding={1}>
               <FormInput
                 label="Başlık"
@@ -182,6 +194,8 @@ const ProjectAdd = ({ match }) => {
               <CityComboBox
                 onProvinceChange={handleProvinceChange}
                 onDistrictChange={handleDistrictChange}
+                provinceValue={selectedProvince}
+                districtValue={selectedDistrict}
               />
             </Stack>
             <Stack direction="row" spacing={3} padding={1}>

@@ -30,7 +30,7 @@ const taskSchema = new mongoose.Schema({
         type: String,
     },
     images:{
-        type: Array,
+        type: [String],
     },
     roomnumber:{
         type: String,
