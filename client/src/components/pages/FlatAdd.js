@@ -142,7 +142,7 @@ const FlatAdd = ({ match }) => {
       district: value ? value.name : location.district,
     }));
   };
-  console.log(selectedProvince, selectedDistrict)
+  
   return (
     <Container maxWidth="lg" className="flattAddContainer">
       <Grid container padding={2} direction="row" sx={{ height: '100vh' }}>

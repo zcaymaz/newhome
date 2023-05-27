@@ -35,15 +35,31 @@ const ProjectCtrl = {
         }
     },
     createProject: async (req, res) => {
+        const imageUrls = req.files.map((file) => file.path);
+        const { name, useremail, title, location, startDate, finishDate, description, housingnumber, features } = req.body;
+      
         try {
-            const { name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features } = req.body;
-
-            const newProject = new Project({
-                name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features
+          const newProject = new Project({
+            name, useremail, title, location, description, startDate, images: imageUrls, finishDate, housingnumber, features
+          });
+      
+          await newProject.save();
+      
+            res.json({ msg: "Yeni Proje Oluşturuldu." })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    updateProject: async (req, res) => {
+        try {
+            const imageUrls = req.files.map((file) => file.path);
+            const { name, useremail, title, location, startDate, finishDate, description, housingnumber, features } = req.body;
+    
+            await Project.findOneAndUpdate({ _id: req.params.id }, {
+                name, useremail, title, location, description, images: imageUrls, startDate, finishDate, features, housingnumber
             })
 
-            await newProject.save()
-            res.json({ msg: "Yeni Proje Oluşturuldu." })
+            res.json({ msg: "Project Güncellendi." })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
@@ -54,19 +70,6 @@ const ProjectCtrl = {
             res.json({ msg: "Project Silindi." })
         } catch (err) {
             return res.status(500).json({ msg: 'Silinemedi.' })
-        }
-    },
-    updateProject: async (req, res) => {
-        try {
-            const { name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features } = req.body;
-
-            await Project.findOneAndUpdate({ _id: req.params.id }, {
-                name, useremail, title, location, startDate, finishDate, description, images, housingnumber, features
-            })
-
-            res.json({ msg: "Project Güncellendi." })
-        } catch (err) {
-            return res.status(500).json({ msg: err.message })
         }
     }
 }
