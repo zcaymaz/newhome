@@ -66,8 +66,10 @@ const FlatAdd = ({ match }) => {
     }
   };
   const handleImageChange = (images) => {
-    setSelectedImages(Array.from(images));
-  };  
+    const convertedImages = Array.from(images).map((image) => URL.createObjectURL(image));
+    setSelectedImages(convertedImages);
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -75,6 +77,13 @@ const FlatAdd = ({ match }) => {
     selectedImages.forEach((image) => {
       formData.append('images', image);
     });
+    await Promise.all(
+      selectedImages.map(async (imageUrl, index) => {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        formData.append('images', blob, `image${index}`);
+      })
+    );
     formData.append('title', title);
     formData.append('price', price);
     formData.append('name', localStorage.getItem('name'));
