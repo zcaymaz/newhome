@@ -50,7 +50,8 @@ const FlatAdd = ({ match }) => {
       const res = await axios.get(`http://localhost:3001/api/task/${flatId}`);
       const ad = res.data;
       setTitle(ad.title);
-      setLocation(ad.location);
+      setSelectedProvince(ad.location[0].province);
+      setSelectedDistrict(ad.location[0].district);
       setPrice(ad.price);
       setDesc(ad.description);
       setType(ad.type);
@@ -60,7 +61,6 @@ const FlatAdd = ({ match }) => {
       setSquareMeters(ad.squaremeters);
       setFeatures(ad.features);
       setSelectedImages(ad.images); // Güncelleme: Sunucudan gelen resimleri selectedImages state'ine ekliyoruz
-      console.log(res.data)
     } catch (error) {
       console.log(error.response.data.msg);
     }
@@ -89,8 +89,8 @@ const FlatAdd = ({ match }) => {
     formData.append('name', localStorage.getItem('name'));
     formData.append('useremail', localStorage.getItem('email'));
     formData.append('description', description);
-    formData.append('location[province]', location.province);
-    formData.append('location[district]', location.district);
+    formData.append('location[province]', selectedProvince);
+    formData.append('location[district]', selectedDistrict);
     formData.append('type', type);
     formData.append('roomnumber', roomnumber);
     formData.append('saletype', saletype);
@@ -128,21 +128,21 @@ const FlatAdd = ({ match }) => {
   };
 
   const handleProvinceChange = (event, value) => {
-    setSelectedProvince(value);
+    setSelectedProvince(value ? value.name : location.province);
     setLocation((prevState) => ({
       ...prevState,
-      province: value ? value.name : '',
+      province: value ? value.name : location.province,
     }));
   };
-
+  
   const handleDistrictChange = (event, value) => {
-    setSelectedDistrict(value);
+    setSelectedDistrict(value ? value.name : location.district);
     setLocation((prevState) => ({
       ...prevState,
-      district: value ? value.name : '',
+      district: value ? value.name : location.district,
     }));
   };
-
+  console.log(selectedProvince, selectedDistrict)
   return (
     <Container maxWidth="lg" className="flattAddContainer">
       <Grid container padding={2} direction="row" sx={{ height: '100vh' }}>
