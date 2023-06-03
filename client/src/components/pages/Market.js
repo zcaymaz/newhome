@@ -5,7 +5,11 @@ import Footer from "../Footer";
 import FlatItem from "../FlatItem";
 import { Stack, Autocomplete, TextField, Button } from "@mui/material";
 import axios from "axios";
-import { SelectResidence, SelectRoomCount, SelectSaleType } from '../common/SelectComp';
+import {
+  SelectResidence,
+  SelectRoomCount,
+  SelectSaleType,
+} from "../common/SelectComp";
 
 const Market = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,6 +22,8 @@ const Market = () => {
   const [type, setType] = useState("");
   const [roomnumber, setRoomNumber] = useState("");
   const [saletype, setSaleType] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   useEffect(() => {
     axios
@@ -25,7 +31,7 @@ const Market = () => {
       .then((res) => {
         const reversedFlat = res.data.reverse();
         setFlat(reversedFlat);
-        setFilteredFlats(null)
+        setFilteredFlats(null);
       })
       .catch((error) => {
         console.error(error);
@@ -34,8 +40,15 @@ const Market = () => {
 
   useEffect(() => {
     filterFlatByLocation();
-  }, [selectedDistrict, selectedProvince, searchTerm, type, roomnumber, saletype]);
-  
+  }, [
+    selectedDistrict,
+    selectedProvince,
+    searchTerm,
+    type,
+    roomnumber,
+    saletype,
+    minPrice,
+  ]);
 
   const filterFlatByLocation = () => {
     let filteredData = flat.filter((fl) => {
@@ -45,34 +58,46 @@ const Market = () => {
           fl?.location?.[0]?.district === selectedDistrict.name
         );
       }
-  
+
       if (selectedProvince) {
         return fl?.location?.[0]?.province === selectedProvince.name;
       }
       return true;
     });
-  
+
     if (searchTerm) {
       filteredData = filteredData.filter((fl) =>
         fl.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-  
+
     if (type) {
       filteredData = filteredData.filter((fl) => fl.type === type);
     }
-  
+
     if (roomnumber) {
       filteredData = filteredData.filter((fl) => fl.roomnumber === roomnumber);
     }
-  
+
     if (saletype) {
       filteredData = filteredData.filter((fl) => fl.saletype === saletype);
     }
-  
+
+    if (minPrice && maxPrice) {
+      filteredData = filteredData.filter(
+        (fl) => fl.price >= parseInt(minPrice) && fl.price <= parseInt(maxPrice)
+      );
+    } else if (minPrice) {
+      filteredData = filteredData.filter(
+        (fl) => fl.price >= parseInt(minPrice)
+      );
+    } else if (maxPrice) {
+      filteredData = filteredData.filter(
+        (fl) => fl.price <= parseInt(maxPrice)
+      );
+    }
     setFilteredFlats(filteredData);
   };
-  
 
   const fetchProvinces = async () => {
     try {
@@ -120,6 +145,14 @@ const Market = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleMinPrice = (e) => {
+    setMinPrice(e.target.value);
+  };
+
+  const handleMaxPrice = (e) => {
+    setMaxPrice(e.target.value);
+  };
+
   const handleReset = () => {
     setSearchTerm("");
     setSelectedProvince(null);
@@ -127,7 +160,10 @@ const Market = () => {
     setType("");
     setRoomNumber("");
     setSaleType("");
+    setMinPrice("");
+    setMaxPrice("");
   };
+
   return (
     <>
       <section className="about">
@@ -192,38 +228,69 @@ const Market = () => {
                   />
                 </div>
               </div>
-              <div className="col-lg-3 mt-3">
+              <div className="col-lg-4 mt-3">
                 <div className="search-area2">
-                <SelectResidence
-                name="type"
-                id="type"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                />
+                  <SelectResidence
+                    name="type"
+                    id="type"
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4 mt-3">
+                <div className="search-area2">
+                  <SelectRoomCount
+                    name="roomnumber"
+                    id="roomnumber"
+                    value={roomnumber}
+                    onChange={(e) => setRoomNumber(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4 mt-3">
+                <div className="search-area2">
+                  <SelectSaleType
+                    name="saletype"
+                    id="saletype"
+                    value={saletype}
+                    onChange={(e) => setSaleType(e.target.value)}
+                  />
                 </div>
               </div>
               <div className="col-lg-3 mt-3">
                 <div className="search-area2">
-                <SelectRoomCount
-                  name="roomnumber"
-                  id="roomnumber"
-                  value={roomnumber}
-                  onChange={(e) => setRoomNumber(e.target.value)}
-                />
+                  <input
+                    type="number"
+                    className="inp-search"
+                    value={minPrice}
+                    onChange={handleMinPrice}
+                    placeholder="Min Tutar"
+                  />
                 </div>
               </div>
               <div className="col-lg-3 mt-3">
                 <div className="search-area2">
-                <SelectSaleType
-                  name="saletype"
-                  id="saletype"
-                  value={saletype}
-                  onChange={(e) => setSaleType(e.target.value)}
-                />
+                  <input
+                    type="number"
+                    className="inp-search"
+                    value={maxPrice}
+                    onChange={handleMaxPrice}
+                    placeholder="Max Tutar"
+                  />
                 </div>
               </div>
               <div className="col-lg-3 mt-4">
-                <Button sx={{color:'#ffff', bgcolor:'#0f0f0f', height:'40px', padding:'1rem', "&:hover": {bgcolor: "primary.dark"},}} onClick={handleReset}>
+                <Button
+                  sx={{
+                    color: "#ffff",
+                    bgcolor: "#0f0f0f",
+                    height: "40px",
+                    padding: "1rem",
+                    "&:hover": { bgcolor: "primary.dark" },
+                  }}
+                  onClick={handleReset}
+                >
                   Sıfırla
                 </Button>
               </div>
@@ -233,39 +300,41 @@ const Market = () => {
         <section className="section-all-re">
           <div className="container">
             <div className="row">
-              {!filteredFlats ? flat.map((flat) => (
-                <FlatItem
-                  key={flat._id}
-                  flatId={flat._id}
-                  src={
-                    flat.images && flat.images.length > 0
-                      ? flat.images[0]
-                      : flat.image
-                  }
-                  name={flat.name}
-                  title={flat.title}
-                  price={flat.price}
-                  type={flat.type}
-                  roomnumber={flat.roomnumber}
-                  squaremeters={flat.squaremeters}
-                />
-              )) : filteredFlats.map((flat) => (
-                <FlatItem
-                  key={flat._id}
-                  flatId={flat._id}
-                  src={
-                    flat.images && flat.images.length > 0
-                      ? flat.images[0]
-                      : flat.image
-                  }
-                  name={flat.name}
-                  title={flat.title}
-                  price={flat.price}
-                  type={flat.type}
-                  roomnumber={flat.roomnumber}
-                  squaremeters={flat.squaremeters}
-                />
-              ))}
+              {!filteredFlats
+                ? flat.map((flat) => (
+                    <FlatItem
+                      key={flat._id}
+                      flatId={flat._id}
+                      src={
+                        flat.images && flat.images.length > 0
+                          ? flat.images[0]
+                          : flat.image
+                      }
+                      name={flat.name}
+                      title={flat.title}
+                      price={flat.price}
+                      type={flat.type}
+                      roomnumber={flat.roomnumber}
+                      squaremeters={flat.squaremeters}
+                    />
+                  ))
+                : filteredFlats.map((flat) => (
+                    <FlatItem
+                      key={flat._id}
+                      flatId={flat._id}
+                      src={
+                        flat.images && flat.images.length > 0
+                          ? flat.images[0]
+                          : flat.image
+                      }
+                      name={flat.name}
+                      title={flat.title}
+                      price={flat.price}
+                      type={flat.type}
+                      roomnumber={flat.roomnumber}
+                      squaremeters={flat.squaremeters}
+                    />
+                  ))}
             </div>
           </div>
         </section>
