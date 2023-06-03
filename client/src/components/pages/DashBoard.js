@@ -94,7 +94,7 @@ const DashBoard = () => {
     return (
         <>
             <Box
-                sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh', border: 2, borderColor: 'divider', fontSize: '35px' }}
+                sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%', border: 2, borderColor: 'divider', fontSize: '35px' }}
             >
                 <Tabs
                     orientation="vertical"
@@ -114,6 +114,7 @@ const DashBoard = () => {
                                 {flat.map((flat) => (
                                     <FlatItem
                                         key={flat._id}
+                                        flatId={flat._id}
                                         src={flat.images && flat.images.length > 0 ? flat.images[0] : flat.image}
                                         onClick={() => localStorage.setItem('flatId', flat._id)}
                                         name={flat.name}

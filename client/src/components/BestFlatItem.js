@@ -1,18 +1,9 @@
 import React from 'react';
 import { Home, Chair, SelectAll, Store } from '@mui/icons-material';
-import { Stack, Button, CardActionArea } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 import { formatCurrency } from './common/FormatCurrency';
 
 const BestFlatItem = ({ flatSaletype, flatPrice, flatId, flatSrc, flatDescription, flatTitle, flatName, flatType, flatRoomnumber, flatSquaremeters }) => {
-    const isAdmin = localStorage.getItem('role') === '1' ? true : false
-    const adminRouter = () => {
-        return (
-            <Stack direction="row" spacing={3} bgcolor="white">
-                <Button className='adminButtonPut'>Düzenle</Button>
-                <Button className='adminButtonDelete'>Sil</Button>
-            </Stack>
-        )
-    }
 
     return (
         <div className="best-estate">
@@ -48,7 +39,6 @@ const BestFlatItem = ({ flatSaletype, flatPrice, flatId, flatSrc, flatDescriptio
                         <h5>{formatCurrency(flatPrice)}</h5>
                     </div>
                 </CardActionArea>
-                {isAdmin ? adminRouter() : null}
             </div>
         </div>
     )

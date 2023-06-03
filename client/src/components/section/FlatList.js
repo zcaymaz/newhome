@@ -10,14 +10,18 @@ const FlatList = ({ searchTerm, title, selectedProvince, selectedDistrict }) => 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/task/`)
       .then((res) => {
-        const reversedFlat = res.data.reverse();
-        setFlat(reversedFlat);
-        const flatLocations = reversedFlat.map((flat) => flat.location);
+        const randomData = getRandomElements(res.data, 9);
+        setFlat(randomData);
+        const flatLocations = randomData.map((flat) => flat.location);
         setFlatLocation(flatLocations);
       })
       .catch((error) => { console.error(error); });
   }, []);
   
+  function getRandomElements(array, count) {
+    const shuffledArray = array.sort(() => Math.random() - 0.5);
+    return shuffledArray.slice(0, count);
+  }
 
   const filterFlatByLocation = (flat) => {
     if (selectedProvince && selectedDistrict) {
