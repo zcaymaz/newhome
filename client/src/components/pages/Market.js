@@ -345,3 +345,118 @@ const Market = () => {
 };
 
 export default Market;
+
+  // useEffect(() => {
+  //   filterFlatByLocation();
+  // }, [selectedDistrict, selectedProvinces, searchTerm, type, roomnumber, saletype]);
+  
+
+  // const filterFlatByLocation = () => {
+  //   let filteredData = flat.filter((fl) => {
+  //     if (selectedProvinces.length > 0 && selectedDistrict) {
+  //       const provinceMatch = selectedProvinces.some(province =>
+  //         province.name === fl?.location?.[0]?.province
+  //       );
+  //       return provinceMatch && fl?.location?.[0]?.district === selectedDistrict.name;
+  //     }
+  
+  //     if (selectedProvinces.length > 0) {
+  //       const provinceMatch = selectedProvinces.some(province =>
+  //         province.name === fl?.location?.[0]?.province
+  //       );
+  //       return provinceMatch;
+  //     }
+  //     return true;
+  //   });
+  
+  //   if (searchTerm) {
+  //     filteredData = filteredData.filter((fl) =>
+  //       fl.title.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  //   }
+  
+  //   if (type) {
+  //     filteredData = filteredData.filter((fl) => fl.type === type);
+  //   }
+  
+  //   if (roomnumber) {
+  //     filteredData = filteredData.filter((fl) => fl.roomnumber === roomnumber);
+  //   }
+  
+  //   if (saletype) {
+  //     filteredData = filteredData.filter((fl) => fl.saletype === saletype);
+  //   }
+  
+  //   setFilteredFlats(filteredData);
+  // };
+  
+  // const handleProvinceChange = (event, values) => {
+  //   setSelectedProvinces(values);
+  //   setSelectedDistrict(null);
+  //   if (values && values.length > 0) {
+  //     const selectedProvinceIds = values.map(value => value.id);
+  //     fetchDistricts(selectedProvinceIds);
+  //   }
+
+  //   filterFlatByLocation();
+  // };
+
+  // const handleDistrictChange = (event, value) => {
+  //   setSelectedDistrict(value);
+
+  //   filterFlatByLocation();
+  // };
+
+  // useEffect(() => {
+  //   fetchProvinces();
+  // }, []);
+
+  // const handleSearch = (e) => {
+  //   setSearchTerm(e.target.value);
+  // };
+
+  // const handleReset = () => {
+  //   setSearchTerm("");
+  //   setSelectedProvinces([]);
+  //   setSelectedDistrict(null);
+  //   setType("");
+  //   setRoomNumber("");
+  //   setSaleType("");
+  // };
+  //               <Stack direction="row" spacing={3} width="100%">
+  //                 <Autocomplete
+  //                   size="medium"
+  //                   disablePortal
+  //                   multiple
+  //                   id="combo-box-province"
+  //                   sx={{ width: "100%", bgcolor: "#FEFCFD" }}
+  //                   renderInput={(params) => (
+  //                     <TextField {...params} label="İl" />
+  //                   )}
+  //                   options={provinces}
+  //                   getOptionLabel={(option) => option.name}
+  //                   onChange={handleProvinceChange}
+  //                   value={selectedProvinces}
+  //                   isOptionEqualToValue={(option, value) =>
+  //                     option.id === value?.id
+  //                   }
+  //                 />
+  //                 {selectedProvinces.length > 0 && (
+  //                   <Autocomplete
+  //                     size="medium"
+  //                     disablePortal
+  //                     id="combo-box-district"
+  //                     sx={{ width: "100%", bgcolor: "#FEFCFD" }}
+  //                     renderInput={(params) => (
+  //                       <TextField {...params} label="İlçe" />
+  //                     )}
+  //                     options={districts}
+  //                     getOptionLabel={(option) => option.name}
+  //                     onChange={handleDistrictChange}
+  //                     value={selectedDistrict}
+  //                     isOptionEqualToValue={(option, value) =>
+  //                       option.id === value?.id
+  //                     }
+  //                   />
+  //                 )}
+  //               </Stack>
